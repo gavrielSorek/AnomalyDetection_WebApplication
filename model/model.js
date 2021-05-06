@@ -43,7 +43,7 @@ function writeTrain(req, res, data) {
       attrObjArry.push(singleObj);
    }
    csvWriter.writeRecords(attrObjArry);
-   let modelItem = new moddelItem(currentId, req.query.model_type, new Date(), "ready", path);
+   let modelItem = new moddelItem(currentId, req.query.model_type, new Date(), "pending", path);
    modelMap.set(modelItem.id, modelItem);
    // let moddelItem = new moddelItem();
    return modelItem;
@@ -110,22 +110,23 @@ function learnModel(item) {
    }
 }
 function learnFinished(err, result) {
-   console.log("wwwwwwwwwwwwwww");
-   console.log("err:"+ err + " result: "+result);
-   /*
+
+   
    if (err) { //need to add logic
 
    } else {
       var model = modelMap.get(parseInt(result));
       if(model) {
          model.status = "ready";
+         console.log("item " + result + " is ready , new state" + model.status);
+
       }
       else {
          console.log("Item with id"+ result + "not found");
       }
 
    }
-*/
+
 }
 module.exports = {
    writeTrain, isMoudoleExsist, deleteModel, getModels, createAnnomalyFile, learnModel

@@ -1,5 +1,6 @@
 id = 1;
 var express = require('express');
+
 var app = express();
 var fs = require("fs");
 const model = require('../model/model')
@@ -9,25 +10,31 @@ const model = require('../model/model')
 
 
 var bodyParser = require('body-parser');
+const { Server } = require('http');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 
 
 app.post('/api/model', function (req, res, next) { //next requrie (the function will not stop the program)
    const type = req.query.model_type; //type = hybrid/regression
- //  console.log("the type is :" + type);
-   const data = req.body; //data is the object that the json body contain
-   var modelItem = model.writeTrain(req, res, data)
+   //  console.log("the type is :" + type);
+     const data = req.body; //data is the object that the json body contain
+   var modelItem = model.writeTrain(req, res, data);
+  
    var json_res = {
       model_id: modelItem.id,
       upload_time: modelItem.datetime,
       status: "pending"
    }
-   var statusCode = model.learnModel(modelItem);
-   //res.status(statusCode);
+   res.header("Access-Control-Allow-Origin", "*");
    res.json(json_res);
+   res.status(200);  
 
-   next();
+   setTimeout(function afterTwoSeconds() {
+      var statusCode = model.learnModel(modelItem);
+   }, 5000)
+    
+
 })
 
 app.get('/api/model' , function (req, res ,next) {
@@ -39,7 +46,7 @@ app.get('/api/model' , function (req, res ,next) {
       var json_res = {
          model_id: m.id,
          upload_time: m.datetime,
-         status: "ready"
+         status: m.status
       }
    
       res.json(json_res);
@@ -56,11 +63,15 @@ app.delete('/api/model' , function (req, res ,next) {
    var m = model.isMoudoleExsist(id);
    if(m){
       model.deleteModel(id)
+      var json_res = {
+      }
+      res.header("Access-Control-Allow-Origin", "*");
+      res.json(json_res);
       res.status(200);
       console.log("item deleted sucssfully");
    }else{
       console.log("item not found, error 400");
-      res.status(400);
+      res.status(200);
    }
    next();
 })
@@ -73,12 +84,13 @@ app.get('/api/models' , function (req, res ,next) {
       jsonItem= {
          model_id: values.id,
          upload_time: values.datetime,
-         status: "ready"
+         status: values.status
       } 
       modelArr.push(jsonItem);
    })
 
  //console.log(json);
+ res.header("Access-Control-Allow-Origin", "*");
  res.json(modelArr);
    res.status(200);
    next();
