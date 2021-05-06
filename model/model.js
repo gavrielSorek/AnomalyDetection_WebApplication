@@ -20,7 +20,7 @@ function moddelItem(id, type, datetime, status, fileName) {
    this.annomalyFile = null;
 }
 
-function writeTrain(req, res, data) {
+function writeTrain(req, res, data, writeCsvFinished) {
    let csvHeader = []
    for (const property in data) {
       csvHeader.push({ id: property, title: property });
@@ -42,11 +42,16 @@ function writeTrain(req, res, data) {
       }
       attrObjArry.push(singleObj);
    }
-   csvWriter.writeRecords(attrObjArry);
-   let modelItem = new moddelItem(currentId, req.query.model_type, new Date(), "ready", path);
+   let modelItem = new moddelItem(currentId, req.query.model_type, new Date(), "pendding", path);
+   csvWriter.writeRecords(attrObjArry).then(()=>{
+      writeCsvFinished(modelItem);
+   });
    modelMap.set(modelItem.id, modelItem);
-   // let moddelItem = new moddelItem();
    return modelItem;
+   //let modelItem = new moddelItem(currentId, req.query.model_type, new Date(), "ready", path);
+   //modelMap.set(modelItem.id, modelItem);
+   // let moddelItem = new moddelItem();
+   //return modelItem;
 }
 
 function createAnnomalyFile(itemID, data) {
@@ -94,7 +99,6 @@ function getModels() {
    return modelMap;
 }
 function learnModel(item) {
-   
    if (item.type === "regression") {
       var simpleDetector = new detectorsFile.SimpleAnomalyDetectorJS(item.id.toString());
       simpleDetector.LearnNormal(item.fileName, learnFinished);
@@ -110,10 +114,9 @@ function learnModel(item) {
    }
 }
 function learnFinished(err, result) {
-   console.log("wwwwwwwwwwwwwww");
-   console.log("err:"+ err + " result: "+result);
-   /*
+   //console.log("err:"+ err + " result: "+result);
    if (err) { //need to add logic
+      console.log("err:"+ err );
 
    } else {
       var model = modelMap.get(parseInt(result));
@@ -125,7 +128,7 @@ function learnFinished(err, result) {
       }
 
    }
-*/
+
 }
 module.exports = {
    writeTrain, isMoudoleExsist, deleteModel, getModels, createAnnomalyFile, learnModel

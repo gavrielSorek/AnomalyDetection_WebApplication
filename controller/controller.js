@@ -15,88 +15,96 @@ app.use(bodyParser.json())
 
 app.post('/api/model', function (req, res, next) { //next requrie (the function will not stop the program)
    const type = req.query.model_type; //type = hybrid/regression
- //  console.log("the type is :" + type);
+   //  console.log("the type is :" + type);
    const data = req.body; //data is the object that the json body contain
-   var modelItem = model.writeTrain(req, res, data)
-   var json_res = {
-      model_id: modelItem.id,
-      upload_time: modelItem.datetime,
-      status: "pending"
+   let modelItem = model.writeTrain(req, res, data, writeCsvFinished)
+   //when write csv finished we learn normal
+   function writeCsvFinished(modelItem) {
+      model.learnModel(modelItem);
    }
-   var statusCode = model.learnModel(modelItem);
-   //res.status(statusCode);
-   res.json(json_res);
-
+   //send to client
+   if (modelItem) {
+      var json_res = {
+         model_id: modelItem.id,
+         upload_time: modelItem.datetime,
+         status: modelItem.status
+      }
+      res.status(200);
+      res.json(json_res);
+   } else {
+      //failed
+      res.status(400);
+   }
    next();
 })
 
-app.get('/api/model' , function (req, res ,next) {
-      const id  = req.query.model_id;
-      var m = model.isMoudoleExsist(id);
-     // console.log("the id is " + id);
-     // console.log("the item is :" + m)
-      if(m){
+app.get('/api/model', function (req, res, next) {
+   const id = req.query.model_id;
+   var m = model.isMoudoleExsist(id);
+   // console.log("the id is " + id);
+   // console.log("the item is :" + m)
+   if (m) {
       var json_res = {
          model_id: m.id,
          upload_time: m.datetime,
          status: "ready"
       }
-   
+
       res.json(json_res);
       res.status(200);
    }
-   else{
+   else {
       res.status(400);
    }
-      next();
+   next();
 })
 
-app.delete('/api/model' , function (req, res ,next) {
-   const id  = req.query.model_id;
+app.delete('/api/model', function (req, res, next) {
+   const id = req.query.model_id;
    var m = model.isMoudoleExsist(id);
-   if(m){
+   if (m) {
       model.deleteModel(id)
       res.status(200);
       console.log("item deleted sucssfully");
-   }else{
+   } else {
       console.log("item not found, error 400");
       res.status(400);
    }
    next();
 })
 
-app.get('/api/models' , function (req, res ,next) {
-   var json={};
+app.get('/api/models', function (req, res, next) {
+   var json = {};
    var modelArr = new Array();
    models = model.getModels();
-   models.forEach((values,keys)=>{
-      jsonItem= {
+   models.forEach((values, keys) => {
+      jsonItem = {
          model_id: values.id,
          upload_time: values.datetime,
          status: "ready"
-      } 
+      }
       modelArr.push(jsonItem);
    })
 
- //console.log(json);
- res.json(modelArr);
+   //console.log(json);
+   res.json(modelArr);
    res.status(200);
    next();
 })
 
-app.post('/api/anomaly' , function (req, res ,next) {
-   const id  = req.query.model_id;
+app.post('/api/anomaly', function (req, res, next) {
+   const id = req.query.model_id;
    const data_to_detect = req.body; //data is the object that the json body contain
-   if(!model.isMoudoleExsist(id)){
+   if (!model.isMoudoleExsist(id)) {
       console.status(400);
       console.log("model does not exsist");
    }
-   else{
-      model.createAnnomalyFile(id,data_to_detect);
+   else {
+      model.createAnnomalyFile(id, data_to_detect);
       // TODO add annomaly
    }
    next();
-}) 
+})
 
 var server = app.listen(9876, function () {
    var host = server.address().address
