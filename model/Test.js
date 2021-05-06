@@ -1,6 +1,6 @@
 const cppFile = require('./AnomalyDetectore');
 var detector = new cppFile.SimpleAnomalyDetectorJS("132");
-detector.LearnNormal("C:\\Users\\gavri\\Desktop\\csv\\reg_flight.csv",AsyncWorkerCompletion);
+detector.LearnNormal("train1.csv",AsyncWorkerCompletion);
 //console.log("runSimpleAsyncWorker returned '"+result+"'.");
 
 

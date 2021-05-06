@@ -5,6 +5,8 @@ var fs = require("fs");
 const model = require('../model/model')
 
 
+//var detector = new detectorsFile.SimpleAnomalyDetectorJS("132");
+
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -19,8 +21,10 @@ app.post('/api/model', function (req, res, next) { //next requrie (the function 
    var json_res = {
       model_id: modelItem.id,
       upload_time: modelItem.datetime,
-      status: "ready"
+      status: "pending"
    }
+   var statusCode = model.learnModel(modelItem);
+   //res.status(statusCode);
    res.json(json_res);
 
    next();
