@@ -12,6 +12,7 @@
 # ignor csv files + node_modules folder
 node_modules/
 model/*.csv
+model/AnomalyDetector.node
 
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
