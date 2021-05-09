@@ -4,6 +4,8 @@ var express = require('express');
 var app = express();
 var fs = require("fs");
 const model = require('../model/model')
+let cors = require('cors')
+app.use(cors())
 
 
 //var detector = new detectorsFile.SimpleAnomalyDetectorJS("132");
@@ -68,7 +70,8 @@ app.delete('/api/model', function (req, res, next) {
       model.deleteModel(id)
       var json_res = {
       }
-      res.header("Access-Control-Allow-Origin", "*");
+     // res.header("No-Access-Control-Allow-Origin", "*");
+     res.header("Access-Control-Allow-Origin", "*");
       res.json(json_res);
       res.status(200);
       console.log("item deleted sucssfully");
@@ -91,7 +94,7 @@ app.get('/api/models', function (req, res, next) {
       } 
       modelArr.push(jsonItem);
    })
-
+json["models"] = modelArr;
  //console.log(json);
  res.header("Access-Control-Allow-Origin", "*");
  res.json(modelArr);

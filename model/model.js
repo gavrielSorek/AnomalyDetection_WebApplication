@@ -2,6 +2,8 @@
 var express = require('express');
 const detectorsFile = require('./AnomalyDetectore');
 var app = express();
+var cors = require('cors')
+app.use(cors()) // to avoid the cors http errors
 var fs = require("fs");
 const model = require('../model/model')
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
