@@ -6,7 +6,7 @@ var fs = require("fs");
 const model = require('../model/model')
 let cors = require('cors')
 app.use(cors())
-
+const MaxModels =20
 
 //var detector = new detectorsFile.SimpleAnomalyDetectorJS("132");
 
@@ -18,6 +18,13 @@ app.use(bodyParser.json())
 
 
 app.post('/api/model', function (req, res, next) { //next requrie (the function will not stop the program)
+   // check if we have already 20 models
+   if(model.getModels().size >= MaxModels){
+      res.status(405);
+      res.send;
+      next();
+      return;
+   }
    const type = req.query.model_type; //type = hybrid/regression
    //  console.log("the type is :" + type);
    const data = req.body; //data is the object that the json body contain
