@@ -113,15 +113,34 @@ app.post('/api/anomaly', function (req, res, next) {
    const id = req.query.model_id;
    const data_to_detect = req.body; //data is the object that the json body contain
    if (!model.isMoudoleExsist(id)) {
-      console.status(400);
+      res.status(400);
       console.log("model does not exsist");
    }
    else {
       model.createAnnomalyFile(id, data_to_detect);
-      // TODO add annomaly
+     let modelItem = model.getModels.get(parseInt(id));
+     if(modelItem){
+         var detector = modelItem.anomalyDetector;
+         //TODO add promise to this job, then run the rest.body_status
+         detector.DetectAnomalies(modelItem.annomalyFile,detectAnomaliesFinished);
+
+         res.body(modelItem.anommalys);
+         res.status(200);
+     }
    }
    next();
 })
+
+function detectAnomaliesFinished(err,result){
+   let id = 0 /// TODO update id from result
+   var modelItem = model.getModels.get(parseInt(id));
+   if(modelItem){
+      modelItem.anommalys = result;
+   }
+  // console.log(result);
+   console.log("Anommalies finished");
+   return result;
+}
 
 var server = app.listen(9876, function () {
    var host = server.address().address

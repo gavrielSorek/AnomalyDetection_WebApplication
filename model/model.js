@@ -13,6 +13,7 @@ var id = 1; //global vatiable to represent all the id
 let modelMap = new Map();
 let detectorsFile = null;
 
+//set OS of the system
 var os = getOS();
 console.log("os is " + os);
 if(os =="Linux"){
@@ -45,6 +46,7 @@ function moddelItem(id, type, datetime, status, fileName) {
   this.fileName = fileName;
   this.annomalyFile = null;
   this.anomalyDetector = null;
+  this.anommalys = null;
 }
 
 function writeTrain(req, res, data, writeCsvFinished) {
@@ -70,10 +72,13 @@ function writeTrain(req, res, data, writeCsvFinished) {
     }
     attrObjArry.push(singleObj);
   }
+  let date = new Date();
+  var now = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() +"T" + date.getHours() + ":" +date.getMinutes() + ":" + date.getSeconds() + date.getTimezoneOffset();
+
   let modelItem = new moddelItem(
     currentId,
     req.query.model_type,
-    new Date(),
+    now,
     "pendding",
     path
   );
@@ -125,6 +130,9 @@ function isMoudoleExsist(itemID) {
 }
 
 function deleteModel(itemID) {
+   let model = modelMap.get(parseInt(itemID));
+   if(model)
+      model.anomalyDetector.DeleteDetector(); // free the anommaly detector object 
   modelMap.delete(parseInt(itemID));
 }
 
