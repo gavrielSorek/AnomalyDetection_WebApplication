@@ -1,6 +1,6 @@
 // const modelItem = require('./modelItem.js')
 var express = require('express');
-const detectorsFile = require('./AnomalyDetectore');
+const detectorsFile = require('./AnomalyDetector');
 var app = express();
 var cors = require('cors')
 app.use(cors()) // to avoid the cors http errors

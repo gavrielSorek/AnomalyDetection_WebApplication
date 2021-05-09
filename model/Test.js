@@ -1,6 +1,6 @@
-const cppFile = require('./AnomalyDetectore');
+const cppFile = require('./AnomalyDetector');
 var detector = new cppFile.SimpleAnomalyDetectorJS("132");
-detector.LearnNormal("train1.csv",AsyncWorkerCompletion);
+detector.LearnNormal("..\\testsCsv\\reg_flight.csv",AsyncWorkerCompletion);
 //console.log("runSimpleAsyncWorker returned '"+result+"'.");
 
 
@@ -10,7 +10,7 @@ function AsyncWorkerCompletion (err, result) {
         console.log("anomaly detector returned an error: ", err);
     } else {
         console.log("anomaly detector returned '"+result+"'.");
-        detector.DetectAnomalies("C:\\Users\\gavri\\Desktop\\csv\\anomaly_flight_withoutNames.csv",Anomalies);
+        detector.DetectAnomalies("..\\testsCsv\\anomaly_flight.csv",Anomalies);
         
             }
     
