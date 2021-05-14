@@ -2,11 +2,12 @@ id = 1;
 var express = require('express');
 
 var app = express();
+app.use(express.json({limit: '100mb'}));
 var fs = require("fs");
 const model = require('../model/model')
 let cors = require('cors')
 app.use(cors())
-const MaxModels =20
+const MaxModels = 20
 
 //var detector = new detectorsFile.SimpleAnomalyDetectorJS("132");
 
@@ -19,7 +20,7 @@ app.use(bodyParser.json())
 
 app.post('/api/model', function (req, res, next) { //next requrie (the function will not stop the program)
    // check if we have already 20 models
-   if(model.getModels().size >= MaxModels){
+   if (model.getModels().size >= MaxModels) {
       res.status(405);
       res.send;
       next();
@@ -77,8 +78,8 @@ app.delete('/api/model', function (req, res, next) {
       model.deleteModel(id)
       var json_res = {
       }
-     // res.header("No-Access-Control-Allow-Origin", "*");
-     res.header("Access-Control-Allow-Origin", "*");
+      // res.header("No-Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Origin", "*");
       res.json(json_res);
       res.status(200);
       console.log("item deleted sucssfully");
@@ -98,13 +99,13 @@ app.get('/api/models', function (req, res, next) {
          model_id: values.id,
          upload_time: values.datetime,
          status: values.status
-      } 
+      }
       modelArr.push(jsonItem);
    })
-json["models"] = modelArr;
- //console.log(json);
- res.header("Access-Control-Allow-Origin", "*");
- res.json(modelArr);
+   json["models"] = modelArr;
+   //console.log(json);
+   res.header("Access-Control-Allow-Origin", "*");
+   res.json(modelArr);
    res.status(200);
    next();
 })
@@ -117,30 +118,27 @@ app.post('/api/anomaly', function (req, res, next) {
       console.log("model does not exsist");
    }
    else {
-      model.createAnnomalyFile(id, data_to_detect);
-     let modelItem = model.getModels.get(parseInt(id));
-     if(modelItem){
-         var detector = modelItem.anomalyDetector;
-         //TODO add promise to this job, then run the rest.body_status
-         detector.DetectAnomalies(modelItem.annomalyFile,detectAnomaliesFinished);
+      model.createAnnomalyFile(id, data_to_detect, createAnomalyFileFinished);
+      function createAnomalyFileFinished(id) {
+         let modelItem = model.getModels().get(parseInt(id));
+         if (modelItem) {
+            modelItem.res = res;
+            let detector = modelItem.anomalyDetector;
+            //TODO add promise to this job, then run the rest.body_status
+            detector.DetectAnomalies(modelItem.annomalyFile, model.detectAnomaliesFinished);
+            //  setTimeout(function () {
+            //    res.json(modelItem.anommalys);
+            //    res.status(200);
+            // }, 5000);
+           
 
-         res.body(modelItem.anommalys);
-         res.status(200);
-     }
+         }
+      }
+
+
    }
    next();
 })
-
-function detectAnomaliesFinished(err,result){
-   let id = 0 /// TODO update id from result
-   var modelItem = model.getModels.get(parseInt(id));
-   if(modelItem){
-      modelItem.anommalys = result;
-   }
-  // console.log(result);
-   console.log("Anommalies finished");
-   return result;
-}
 
 var server = app.listen(9876, function () {
    var host = server.address().address

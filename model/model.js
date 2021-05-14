@@ -16,14 +16,14 @@ let detectorsFile = null;
 //set OS of the system
 var os = getOS();
 console.log("os is " + os);
-if(os =="Linux"){
-   detectorsFile = require('../AnomalyDetectorByOs/linux/AnomalyDetector');
+if (os == "Linux") {
+  detectorsFile = require('../AnomalyDetectorByOs/linux/AnomalyDetector');
 }
-else if(os == "MacOS"){
-   detectorsFile = require('../AnomalyDetectorByOs/mac/AnomalyDetector');
-} else{
-   // windows
-   detectorsFile = require('../AnomalyDetectorByOs/windows/AnomalyDetector');
+else if (os == "MacOS") {
+  detectorsFile = require('../AnomalyDetectorByOs/mac/AnomalyDetector');
+} else {
+  // windows
+  detectorsFile = require('../AnomalyDetectorByOs/windows/AnomalyDetector');
 }
 
 function getOS() {
@@ -49,6 +49,7 @@ function moddelItem(id, type, datetime, status, fileName) {
   this.anommalys = null;
 }
 
+
 function writeTrain(req, res, data, writeCsvFinished) {
   let csvHeader = [];
   for (const property in data) {
@@ -73,7 +74,7 @@ function writeTrain(req, res, data, writeCsvFinished) {
     attrObjArry.push(singleObj);
   }
   let date = new Date();
-  var now = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() +"T" + date.getHours() + ":" +date.getMinutes() + ":" + date.getSeconds() + date.getTimezoneOffset();
+  var now = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + "T" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + date.getTimezoneOffset();
 
   let modelItem = new moddelItem(
     currentId,
@@ -93,12 +94,12 @@ function writeTrain(req, res, data, writeCsvFinished) {
   //return modelItem;
 }
 
-function createAnnomalyFile(itemID, data) {
+function createAnnomalyFile(itemID, data, createAnomalyFileFinished) {
   let csvHeader = [];
   for (const property in data) {
     csvHeader.push({ id: property, title: property });
   }
-  var path = "../model/anommaly" + itemID + ".csv";
+  var path = "..\\model\\anommaly" + itemID + ".csv";
 
   const csvWriter = createCsvWriter({
     path: path,
@@ -115,10 +116,11 @@ function createAnnomalyFile(itemID, data) {
     }
     attrObjArry.push(singleObj);
   }
-  csvWriter.writeRecords(attrObjArry);
-
   modelItem = modelMap.get(parseInt(itemID));
   modelItem.annomalyFile = path;
+  csvWriter.writeRecords(attrObjArry).then(() => {
+    createAnomalyFileFinished(parseInt(itemID)); //when write anomaly finished need to detect anomalies 
+  });
 }
 
 function isMoudoleExsist(itemID) {
@@ -130,9 +132,9 @@ function isMoudoleExsist(itemID) {
 }
 
 function deleteModel(itemID) {
-   let model = modelMap.get(parseInt(itemID));
-   if(model)
-      model.anomalyDetector.DeleteDetector(); // free the anommaly detector object 
+  let model = modelMap.get(parseInt(itemID));
+  if (model)
+    model.anomalyDetector.DeleteDetector(); // free the anommaly detector object 
   modelMap.delete(parseInt(itemID));
 }
 
@@ -141,18 +143,14 @@ function getModels() {
 }
 function learnModel(item) {
   if (item.type === "regression") {
-    var simpleDetector = new detectorsFile.SimpleAnomalyDetectorJS(
-      item.id.toString()
-    );
+    let simpleDetector = new detectorsFile.SimpleAnomalyDetectorJS(item.id.toString());
     item.anomalyDetector = simpleDetector;
-    simpleDetector.LearnNormal(item.fileName, learnFinished);
+    item.anomalyDetector.LearnNormal(item.fileName, learnFinished);
     return 200;
   } else if (item.type === "hybrid") {
-    var hybridDetector = new detectorsFile.HybridAnomalyDetectorJS(
-      item.id.toString()
-    );
+    let hybridDetector = new detectorsFile.HybridAnomalyDetectorJS(item.id.toString());
     item.anomalyDetector = hybridDetector;
-    hybridDetector.LearnNormal(item.fileName, learnFinished);
+    item.anomalyDetector.LearnNormal(item.fileName, learnFinished);
     return 200;
   } else {
     return 400;
@@ -172,6 +170,48 @@ function learnFinished(err, result) {
     }
   }
 }
+//the function update the anomalies when detection finishe.
+function detectAnomaliesFinished(err, result) {
+  let id = getIdFromAnomalies(result);
+  var modelItem = getModels().get(parseInt(id));
+  if (modelItem) {
+    modelItem.anommalys = getAnomaliesFromString(result);
+    if (modelItem.res) {
+      modelItem.res.json(modelItem.anommalys);
+      modelItem.res.status(200);
+      modelItem.res.send();
+    }
+  }
+  // console.log(result);
+  //console.log("Anommalies finished");
+
+}
+function getAnomaliesFromString(anomaliesStr) {
+  let anomalies = anomaliesStr.split('\\')[0];
+  if (anomalies) { //if there are anomalies
+    anomalies = anomalies.split('^');
+    let anomaliesObj = {};
+    for (let i = 0; i < anomalies.length; i++) {
+      let line = anomalies[i].split(',')[1];
+      let features = anomalies[i].split(',')[0].split('~');
+      if (!anomaliesObj.features[0]) { //if this feature doesnt exist yet
+        anomaliesObj.features[0] = [];
+      }
+      if (!anomaliesObj.features[1]) { //if this feature doesnt exist yet
+        anomaliesObj.features[1] = [];
+      }
+      anomaliesObj.features[0].push(line);
+      anomaliesObj.features[1].push(line);
+    }
+    return anomaliesObj;
+  }
+return {};
+}
+//return the id from anomaly string
+function getIdFromAnomalies(anomalies) {
+  const anomalyAndId = anomalies.split('\\');
+  return anomalyAndId[1];
+}
 module.exports = {
   writeTrain,
   isMoudoleExsist,
@@ -179,4 +219,5 @@ module.exports = {
   getModels,
   createAnnomalyFile,
   learnModel,
+  detectAnomaliesFinished,
 };
