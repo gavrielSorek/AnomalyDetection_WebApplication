@@ -15,7 +15,6 @@ let detectorsFile = null;
 
 //set OS of the system
 var os = getOS();
-console.log("os is " + os);
 if (os == "Linux") {
   detectorsFile = require('../AnomalyDetectorByOs/linux/AnomalyDetector');
 }

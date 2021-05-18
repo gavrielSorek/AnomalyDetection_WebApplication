@@ -22,7 +22,7 @@ app.post('/api/model', function (req, res, next) { //next requrie (the function 
    // check if we have already 20 models
    if (model.getModels().size >= MaxModels) {
       res.status(405);
-      res.send;
+      res.end();
       next();
       return;
    }
@@ -46,6 +46,7 @@ app.post('/api/model', function (req, res, next) { //next requrie (the function 
    } else {
       //failed
       res.status(400);
+      res.end();
    }
    next();
 })
@@ -64,9 +65,11 @@ app.get('/api/model', function (req, res, next) {
 
       res.json(json_res);
       res.status(200);
+      res.end();
    }
    else {
       res.status(400);
+      res.end();
    }
    next();
 })
@@ -83,9 +86,11 @@ app.delete('/api/model', function (req, res, next) {
       res.json(json_res);
       res.status(200);
       console.log("item deleted sucssfully");
+      res.end();
    } else {
       console.log("item not found, error 400");
       res.status(200);
+      res.end();
    }
    next();
 })
@@ -107,6 +112,7 @@ app.get('/api/models', function (req, res, next) {
    res.header("Access-Control-Allow-Origin", "*");
    res.json(modelArr);
    res.status(200);
+   res.end();
    next();
 })
 
@@ -126,11 +132,11 @@ app.post('/api/anomaly', async (req, res, next) => {
       await model.createAnnomalyFile(id, data_to_detect);
       let modelItem = model.getModels().get(parseInt(id));
          if (modelItem) {
-            console.log('dr1');
             let detector = modelItem.anomalyDetector;
             //TODO add promise to this job, then run the rest.body_status
             res.json(model.extractAnomalies(detector.DetectAnomalies(modelItem.annomalyFile)));
             res.status(200);
+            res.end();
          }
    }
    next();
