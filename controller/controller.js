@@ -43,6 +43,7 @@ app.post('/api/model', function (req, res, next) { //next requrie (the function 
       }
       res.status(200);
       res.json(json_res);
+      res.end();
    } else {
       //failed
       res.status(400);
@@ -79,11 +80,9 @@ app.delete('/api/model', function (req, res, next) {
    var m = model.isMoudoleExsist(id);
    if (m) {
       model.deleteModel(id)
-      var json_res = {
-      }
+     
       // res.header("No-Access-Control-Allow-Origin", "*");
       res.header("Access-Control-Allow-Origin", "*");
-      res.json(json_res);
       res.status(200);
       console.log("item deleted sucssfully");
       res.end();
@@ -119,10 +118,6 @@ app.get('/api/models', function (req, res, next) {
 app.post('/api/anomaly', async (req, res, next) => {
    const id = req.query.model_id;
    const data_to_detect = req.body; //data is the object that the json body contain
-   //res.json({"air_speed":[5,6,7], "lalala":[6,7,8]});
-   //res.status(200);
-   
-
    if (!model.isMoudoleExsist(id)) {
       res.status(400);
       console.log("model does not exsist");
@@ -133,7 +128,6 @@ app.post('/api/anomaly', async (req, res, next) => {
       let modelItem = model.getModels().get(parseInt(id));
          if (modelItem) {
             let detector = modelItem.anomalyDetector;
-            //TODO add promise to this job, then run the rest.body_status
             res.json(model.extractAnomalies(detector.DetectAnomalies(modelItem.annomalyFile)));
             res.status(200);
             res.end();
