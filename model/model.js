@@ -93,7 +93,7 @@ function writeTrain(req, res, data, writeCsvFinished) {
   //return modelItem;
 }
 
-function createAnnomalyFile(itemID, data, createAnomalyFileFinished) {
+async function createAnnomalyFile(itemID, data) {
   let csvHeader = [];
   for (const property in data) {
     csvHeader.push({ id: property, title: property });
@@ -117,9 +117,7 @@ function createAnnomalyFile(itemID, data, createAnomalyFileFinished) {
   }
   modelItem = modelMap.get(parseInt(itemID));
   modelItem.annomalyFile = path;
-  csvWriter.writeRecords(attrObjArry).then(() => {
-    createAnomalyFileFinished(parseInt(itemID)); //when write anomaly finished need to detect anomalies 
-  }).catch(()=>{console.log('dr catch')});
+  return await csvWriter.writeRecords(attrObjArry)
 }
 
 function isMoudoleExsist(itemID) {
