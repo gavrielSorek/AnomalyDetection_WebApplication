@@ -132,7 +132,6 @@ app.post('/api/anomaly', async (req, res, next) => {
             res.json(model.extractAnomalies(detector.DetectAnomalies(modelItem.annomalyFile)));
             res.status(200);
          }
-
    }
    next();
 })

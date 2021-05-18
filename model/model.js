@@ -172,22 +172,27 @@ function extractAnomalies(anomaliesStr) {
   return getAnomaliesFromString(anomaliesStr);
 }
 function getAnomaliesFromString(anomaliesStr) {
+  //console.log(anomaliesStr);
   let anomalies = anomaliesStr.split('\\')[0];
+
   if (anomalies) { //if there are anomalies
     anomalies = anomalies.split('^');
     let anomaliesObj = {};
     for (let i = 0; i < anomalies.length; i++) {
       let line = anomalies[i].split(',')[1];
       let features = anomalies[i].split(',')[0].split('~');
-      if (!anomaliesObj.features[0]) { //if this feature doesnt exist yet
-        anomaliesObj.features[0] = [];
+      let feature1 = features[0];
+      let feature2 = features[1];
+      if (!anomaliesObj[feature1]) { //if this feature doesnt exist yet
+        anomaliesObj[feature1] = [];
       }
-      if (!anomaliesObj.features[1]) { //if this feature doesnt exist yet
-        anomaliesObj.features[1] = [];
+      if (!anomaliesObj.feature2) { //if this feature doesnt exist yet
+        anomaliesObj[feature2] = [];
       }
-      anomaliesObj.features[0].push(line);
-      anomaliesObj.features[1].push(line);
+      anomaliesObj[feature1].push(line);
+      anomaliesObj[feature2].push(line);
     }
+    console.log(anomaliesObj);
     return anomaliesObj;
   }
 return {};
