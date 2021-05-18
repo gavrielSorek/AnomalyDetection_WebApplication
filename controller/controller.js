@@ -113,6 +113,10 @@ app.get('/api/models', function (req, res, next) {
 app.post('/api/anomaly', function (req, res, next) {
    const id = req.query.model_id;
    const data_to_detect = req.body; //data is the object that the json body contain
+   //res.json({"air_speed":[5,6,7], "lalala":[6,7,8]});
+   //res.status(200);
+   
+
    if (!model.isMoudoleExsist(id)) {
       res.status(400);
       console.log("model does not exsist");
@@ -122,20 +126,14 @@ app.post('/api/anomaly', function (req, res, next) {
       function createAnomalyFileFinished(id) {
          let modelItem = model.getModels().get(parseInt(id));
          if (modelItem) {
-            modelItem.res = res;
-            let detector = modelItem.anomalyDetector;
+            console.log('dr1');
+            //let detector = modelItem.anomalyDetector;
             //TODO add promise to this job, then run the rest.body_status
-            detector.DetectAnomalies(modelItem.annomalyFile, model.detectAnomaliesFinished);
-            //  setTimeout(function () {
-            //    res.json(modelItem.anommalys);
-            //    res.status(200);
-            // }, 5000);
-           
-
+            //res.json(model.extractAnomalies(detector.DetectAnomalies(modelItem.annomalyFile)));
+            //res.json({"air_speed":[5,6,7], "lalala":[6,7,8]});
+            res.status(200);
          }
       }
-
-
    }
    next();
 })

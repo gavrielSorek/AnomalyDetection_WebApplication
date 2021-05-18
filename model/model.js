@@ -46,7 +46,6 @@ function moddelItem(id, type, datetime, status, fileName) {
   this.fileName = fileName;
   this.annomalyFile = null;
   this.anomalyDetector = null;
-  this.anommalys = null;
 }
 
 
@@ -120,7 +119,7 @@ function createAnnomalyFile(itemID, data, createAnomalyFileFinished) {
   modelItem.annomalyFile = path;
   csvWriter.writeRecords(attrObjArry).then(() => {
     createAnomalyFileFinished(parseInt(itemID)); //when write anomaly finished need to detect anomalies 
-  });
+  }).catch(()=>{console.log('dr catch')});
 }
 
 function isMoudoleExsist(itemID) {
@@ -171,20 +170,8 @@ function learnFinished(err, result) {
   }
 }
 //the function update the anomalies when detection finishe.
-function detectAnomaliesFinished(err, result) {
-  let id = getIdFromAnomalies(result);
-  var modelItem = getModels().get(parseInt(id));
-  if (modelItem) {
-    modelItem.anommalys = getAnomaliesFromString(result);
-    if (modelItem.res) {
-      modelItem.res.json(modelItem.anommalys);
-      modelItem.res.status(200);
-      modelItem.res.send();
-    }
-  }
-  // console.log(result);
-  //console.log("Anommalies finished");
-
+function extractAnomalies(anomaliesStr) {
+  return getAnomaliesFromString(anomaliesStr);
 }
 function getAnomaliesFromString(anomaliesStr) {
   let anomalies = anomaliesStr.split('\\')[0];
@@ -219,5 +206,5 @@ module.exports = {
   getModels,
   createAnnomalyFile,
   learnModel,
-  detectAnomaliesFinished,
+  extractAnomalies,
 };
