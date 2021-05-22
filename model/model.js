@@ -54,8 +54,12 @@ function writeTrain(req, res, data, writeCsvFinished) {
     csvHeader.push({ id: property, title: property });
   }
   var currentId = id++;
-  var path = "..\\model\\train" + currentId + ".csv";
-
+  let path = "";
+  if (os == "Windows") {
+  path = "..\\model\\train" + currentId + ".csv";
+  } else {
+    path = "../model/train" + currentId + ".csv";
+  }
   const csvWriter = createCsvWriter({
     path: path,
     header: csvHeader,
@@ -97,8 +101,12 @@ async function createAnnomalyFile(itemID, data) {
   for (const property in data) {
     csvHeader.push({ id: property, title: property });
   }
-  var path = "..\\model\\anommaly" + itemID + ".csv";
-
+  let path = "";
+  if (os == "Windows") {
+   path = "..\\model\\anommaly" + itemID + ".csv";
+  } else {
+   path = "../model/anommaly" + itemID + ".csv";
+  }
   const csvWriter = createCsvWriter({
     path: path,
     header: csvHeader,
