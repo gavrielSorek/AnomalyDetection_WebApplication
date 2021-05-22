@@ -1,0 +1,502 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+*:focus {
+  outline: none;
+}
+
+body {
+  background-image: url("https://media.giphy.com/media/3osxYzuMvUJJcqzND2/giphy.gif");
+  background-size: cover;
+
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+
+#list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 0.5fr 1fr 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-template-areas: "clear title title title title nameOfList" "control control control control control control" "performed performed performed view view view" "performed performed performed view view view" "performed performed performed view view view";
+  height: 100vh;
+  background-image: url("https://s3.gifyu.com/images/ezgif-7-d2bcdc1c599f5818402d134fa863.gif");
+  background-size: cover;
+}
+
+#title {
+  color: white;
+  grid-area: title;
+  margin: auto;
+  font-size: 5rem;
+  text-shadow: 0 0 15px white;
+  text-decoration: underline;
+  font-family: "Raleway", sans-serif;
+  margin-bottom: 0.5em;
+  background-color: rgba(190, 190, 190, 0.3);
+  padding: 0.2em;
+  border-radius: 0.5em;
+}
+#buttonTitle {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  grid-area: nameOfList;
+  margin: auto;
+}
+
+#buttonClear {
+  grid-area: clear;
+  margin: auto;
+}
+#nameOfList {
+  color: #ffffff;
+  background-color: transparent;
+  line-height: 120%;
+  border: 1px solid #ffffff;
+  padding: 10px 12px;
+  border-radius: 4px;
+  transition: background-color ease 400ms;
+  margin-bottom: 0.5em;
+}
+#nameOfList:hover {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+#imageBackground {
+  color: #ffffff;
+  background-color: transparent;
+  line-height: 120%;
+  border: 1px solid #ffffff;
+  padding: 10px 12px;
+  border-radius: 4px;
+  transition: background-color ease 400ms;
+  font-size: 1.2em;
+}
+#imageBackground:hover {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+#clear {
+  color: #ffffff;
+  background-color: transparent;
+  line-height: 120%;
+  border: 1px solid #ffffff;
+  padding: 10px 12px;
+  border-radius: 4px;
+  transition: background-color ease 400ms;
+}
+#clear:hover {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+#control {
+  grid-area: control;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1.5fr 1.5fr 1.5fr 1.5fr;
+  gap: 1px 1px;
+  grid-template-areas: ". a a a a a ." ". c c c c c ." ". b b b b b .";
+  justify-content: center;
+  align-items: center;
+}
+
+#one {
+  grid-area: a;
+  display: flex;
+  /* background-color: rgba(255, 255, 255, 0.3); */
+  padding: 1em;
+  border-radius: 5em;
+  animation-name: rainbow;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
+}
+
+@keyframes rainbow {
+  0% {
+    background-color: rgba(122, 131, 255, 0.4);
+  }
+  25% {
+    background-color: rgba(122, 255, 122, 0.4);
+  }
+  50% {
+    background-color: rgba(253, 255, 122, 0.4);
+  }
+  75% {
+    background-color: rgba(190, 190, 190, 0.4);
+  }
+  100% {
+    background-color: rgba(122, 131, 255, 0.4);
+  }
+}
+
+#textInput {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 10px 12px;
+  border-radius: 3em;
+  color: white;
+  width: 100vw;
+  text-align: center;
+  font-size: 2em;
+  margin-right: 5px;
+  transition: all ease 400ms;
+}
+#textInput:hover {
+  background-color: white;
+  color: black;
+}
+#textInput::placeholder {
+  color: black;
+  text-align: center;
+}
+#textInput:focus {
+  color: black;
+  background-color: white;
+}
+
+#prioritySelector {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: black;
+  font-size: 2em;
+  margin-right: 5px;
+  transition: all ease 400ms;
+}
+#prioritySelector:hover {
+  background-color: white;
+}
+#addButton {
+  background-color: rgba(63, 191, 63, 0.84);
+  font-size: 1em;
+  color: honeydew;
+  text-align: center;
+  padding: 1em 2em;
+  border-radius: 50%;
+  transition: all ease 400ms;
+}
+#addButton:hover {
+  background-color: rgb(40, 229, 40);
+  color: black;
+}
+
+#two {
+  grid-area: b;
+  display: flex;
+  /* background-color: rgba(255, 255, 255, 0.3); */
+  padding: 1em;
+  border-radius: 5em;
+  animation-name: rainbow;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
+}
+
+#counter {
+  color: cornsilk;
+}
+#counterContinue {
+  color: cornsilk;
+  margin-left: 0.5em;
+}
+
+#three {
+  grid-area: other;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgba(255, 102, 102, 0.418);
+  border-radius: 5em;
+}
+#undoButton {
+  background-color: rgba(255, 255, 255, 0.3);
+  font-size: 1.5em;
+  color: honeydew;
+  text-align: center;
+  border: 1px solid #ffffff;
+  padding: 0.2em 1em;
+  border-radius: 50%;
+  margin-right: 5px;
+  transition: all ease 400ms;
+}
+#undoButton:hover {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+#sortButton {
+  background-color: rgba(255, 255, 255, 0.3);
+  font-size: 1.5em;
+  color: honeydew;
+  text-align: center;
+  border: 1px solid #ffffff;
+  padding: 0.2em 1em;
+  border-radius: 50%;
+  margin-right: 5px;
+  order: 1;
+  transition: all ease 400ms;
+}
+#sortButton:hover {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+#searchInput {
+  background-color: rgba(255, 255, 255, 0.3);
+  border: 1px solid #ffffff;
+  padding: 10px 12px;
+  border-radius: 1em;
+  color: white;
+  width: 40em;
+  text-align: center;
+  transition: all ease 400ms;
+}
+#searchInput:hover {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+#searchInput::placeholder {
+  color: white;
+}
+#searchInput:focus {
+  background-color: rgba(255, 255, 255, 0.7);
+  color: black;
+}
+
+#view {
+  grid-area: view;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+#Performed {
+  grid-area: performed;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.checkBox {
+  flex: 0.1 0 1px;
+  order: -1;
+  transition: all ease 400ms;
+}
+.deleteButton {
+  font-size: 1.5em;
+  padding: 0.2em 0.5em;
+  background-color: transparent;
+  border: transparent;
+  border-radius: 20%;
+  color: red;
+  flex: 0.2 0 3px;
+  transition: all ease 400ms;
+}
+.deleteButton:hover {
+  background-color: rgba(236, 23, 23, 0.78);
+  color: white;
+  cursor: pointer;
+}
+
+input[type="checkbox"] {
+  background-color: transparent;
+  transform: scale(3);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all ease 400ms;
+}
+
+#Performed > div {
+  background-color: rgba(175, 175, 175, 0.78);
+  text-decoration: line-through;
+}
+#view > div:hover {
+  background-color: rgba(255, 221, 128, 0.78);
+  transform: scale(1.003);
+  transition: all ease 800ms;
+}
+#Performed > div:hover {
+  background-color: rgba(107, 107, 107, 0.78);
+  text-decoration: line-through;
+  transform: scale(1.003);
+  transition: all ease 800ms;
+}
+
+.drop-zone {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 10px 12px;
+  border-radius: 3em;
+  color: black;
+  width: 100vw;
+  text-align: center;
+  font-size: 2em;
+  margin-right: 5px;
+  transition: all ease 400ms;
+}
+
+.drop-zone:hover {
+  background-color: white;
+  color: black;
+}
+
+.drop-zone--over {
+  border-style: solid;
+}
+
+.drop-zone__input {
+  display: none;
+}
+
+.drop-zone__thumb {
+  width: 80%;
+  height: 80%;
+  border-radius: 50px;
+  overflow: hidden;
+  background-color: #cccccc;
+  background-size: cover;
+  position: relative;
+  display: inline-block;
+}
+
+.drop-zone__thumb::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 5px 0;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.75);
+  font-size: 14px;
+  text-align: center;
+}
+
+#dropTitle {
+  color: black;
+  grid-area: title;
+  text-align: center;
+}
+
+.c3 path,
+.c3 line {
+  fill: none;
+  stroke: #000;
+}
+
+.c3 text {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+#charts {
+  position: relative;
+  background-color: white;
+  height: 100vh;
+  width: 208vh;
+  background-size: cover;
+}
+.form {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+}
+.search-field {
+  width: 100%;
+  padding: 10px 35px 10px 15px;
+  border: none;
+  border-radius: 100px;
+  outline: none;
+}
+
+.search-button {
+  background: transparent;
+  border: none;
+  outline: none;
+  margin-left: -33px;
+}
+
+.search-button img {
+  width: 20px;
+  height: 20px;
+  object-fit: cover;
+}
+
+.search-field input:focus + button .fa-search {
+  color: red;
+}
+
+.check-box {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1.5fr 1.5fr;
+  gap: 1px 1px;
+  grid-template-areas: ". box1 ." ". box2 .";
+}
+
+.container {
+  display: inline-block;
+}
+
+.graphs {
+  display: inline-block;
+}
+
+#table {
+  background-color: cornflowerblue;
+  height: 80vh;
+  width: 208vh;
+  background-size: cover;
+}
+
+#myDynamicTable {
+  margin-left: auto;
+  margin-right: auto;
+  width: 1000px;
+  height: 500px;
+  overflow: auto;
+}
+
+/* width */
+#myDynamicTable::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Track */
+#myDynamicTable::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+#myDynamicTable::-webkit-scrollbar-thumb {
+  background: rgb(205, 200, 200);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+#myDynamicTable::-webkit-scrollbar-thumb:hover {
+  background: black;
+}
+
+#chartType {
+  background-color: rgb(129, 207, 224);
+  width: 20%;
+  position: absolute;
+  top: 0;
+  left: 0.2%;
+  height: 100%;
+}
+
+#chart-container {
+  width: 1000px;
+  position: absolute;
+  top: 0;
+  left: 25%;
+  height: 100%;
+}

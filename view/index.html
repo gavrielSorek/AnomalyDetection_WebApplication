@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="style.css" type="text/css" />
+
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Raleway&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+
+		<!-- Load c3.css -->
+
+		<!-- Load d3.js and c3.js -->
+		<script src="javascripts/d3.v3.min.js" charset="utf-8"></script>
+		<script src="javascripts/c3.min.js"></script>
+
+		<!-- Load papaparse.js -->
+		<script src="javascripts/papaparse.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+        
+    </head>
+
+    <body >
+        <div id="list">
+            <div id="buttonClear">
+                <button id="clear" style="font-size: 24px;">
+                    clear all data
+                    <i class="fa fa-eraser" aria-hidden="true"></i>
+                </button>
+            </div>
+            <h1 id="title">Anomaly Detection</h1>
+            <section id="control">
+                <div id="one">
+                    <h1 id="dropTitle">Drop file here or click to upload</h1>
+                    <div class="drop-zone">
+                        <span class="drop-zone__prompt">Learn</span>
+                        <input id="textInput" type="file" name="myFile" class="drop-zone__input">
+                      </div>
+                      <div class="check-box">
+                        <div class="Hybrid-check">
+                            <input class="Hybrid-check-input" type="radio" name="flexRadioDefault" id="HybridRadio">
+                            <label class="form-check-label" for="flexRadioDefault1" id="hybrid_items">
+                              Hybrid
+                            </label>
+                          </div>
+                          <div class="Regression-check">
+                            <input class="Regression-check-input" type="radio" name="flexRadioDefault" id="RegressionRadio" checked>
+                            <label class="form-check-label" for="flexRadioDefault2">
+                              Regression
+                            </label>
+                          </div>
+                      </div>
+
+                    <button id="addButton" type="button" onclick="addNewModel(event)">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                </div>
+                
+            </section>
+            <section id="control">
+                <div id="two">
+                    <h1 id="dropTitle">Drop file here or click to upload</h1>
+                      <div class="drop-zone">
+                        <span class="drop-zone__prompt">Detect</span>
+                        <input id="textInput" type="file" name="myFile" class="drop-zone__input">
+                      </div>
+                      <form action="/" method="GET" class="form">
+                        <input type="search" placeholder="Model ID" class="search-field" />
+                        <button type="submit" class="search-button">
+                          <img src="search.png">
+                        </button>
+                      </form>
+                    <button id="addButton" onclick="detecetAnomalies()">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                </div>
+                
+            </section>
+
+            <section id="view"></section>
+            <section id="Performed"></section>
+        </div>
+
+            <div id="charts">
+                <section id="control"></section>                        
+                    <select name="chartType" id="chartType" multiple="multiple" onchange="updateGraph()"></select>
+                    <!---
+                        <div class="container" style="width: 100%;;max-width:3000px;height:1000px;max-height:1000px;">
+                        <div class="graphs" id="chart" style="width: 1200px;max-width:3000px;height:80%;max-height:1000px;position: relative;"></div>
+                        <--->
+                        <div class="chart-container" id="chart-container">
+                            <canvas id="myChart" style="width: 800px; height:80%" ></canvas>
+                          </div>    
+
+                    </section>
+            </div>
+
+            <div id="table">
+                <div id="myDynamicTable"></div>
+            </div>
+    </body>
+    <script src="javascripts/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</html>
