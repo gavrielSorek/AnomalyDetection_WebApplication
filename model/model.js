@@ -193,7 +193,7 @@ function getAnomaliesFromString(anomaliesStr) {
       if (!anomaliesObj[feature1]) { //if this feature doesnt exist yet
         anomaliesObj[feature1] = [];
       }
-      if (!anomaliesObj.feature2) { //if this feature doesnt exist yet
+      if (!anomaliesObj[feature2]) { //if this feature doesnt exist yet
         anomaliesObj[feature2] = [];
       }
       anomaliesObj[feature1].push(line);
