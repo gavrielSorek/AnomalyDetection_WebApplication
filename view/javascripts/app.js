@@ -12,8 +12,8 @@ const addButton = document.getElementById("addButton");
 const title = document.getElementById("title");
 
 
-function addNewModel(e) {
-    e.preventDefault();
+function addNewModel() {
+ //   e.preventDefault();
     globalType = checkClicked();
     console.log(globalType);
     createNewModel(globalType, globaljsonObject);
@@ -204,6 +204,7 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
     const Http = new XMLHttpRequest();
     const url='http://localhost:9876/api/model?model_type='+type;
     Http.open("POST", url);
+    Http.setRequestHeader("Access-Control-Allow-Origin", "*")
     Http.setRequestHeader("Content-Type", "application/json");
     Http.send(jsonData);
     return false;
@@ -213,14 +214,13 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
     const Http = new XMLHttpRequest();
     const url='http://localhost:9876/api/anomaly?model_id=1';
     Http.open("POST", url);
+   // Http.setRequestHeader("Access-Control-Allow-Origin", "*")
     Http.setRequestHeader("Content-Type", "application/json");
-    console.log("jsonData: ")
-    console.log(jsonData)
+  //  console.log("jsonData: ")
     var json_res = {
       model_id: "1",
-      upload_time: "2",
-      status: "3"
    }
+   console.log(json_res)
     Http.send(json_res);
     // var anomalies = Http.response();
     // console.log(anomalies);
