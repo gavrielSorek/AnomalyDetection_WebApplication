@@ -120,7 +120,7 @@ app.post('/api/anomaly', async (req, res, next) => {
    res.header("Access-Control-Allow-Origin", "*");
    const data_to_detect = req.body; //data is the object that the json body contain
    if (!model.isMoudoleExsist(id)) {
-      res.status(400);
+      res.status(420);
       console.log("model does not exsist");
       res.end();
    }

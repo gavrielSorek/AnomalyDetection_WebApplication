@@ -49,9 +49,9 @@
             <section id="control">
                 <div id="one">
                     <h1 id="dropTitle">Drop file here or click to upload</h1>
-                    <div class="drop-zone">
-                        <span class="drop-zone__prompt">Learn</span>
-                        <input id="textInput" type="file" name="myFile" class="drop-zone__input">
+                    <div class="drop-zone-learn">
+                        <span class="drop-zone__prompt-detect">Learn</span>
+                        <input id="textInput" type="file" name="myFile" class="drop-zone__input-learn">
                       </div>
                       <div class="check-box">
                         <div class="Hybrid-check">
@@ -68,7 +68,7 @@
                           </div>
                       </div>
 
-                    <button id="addButton" type="button" onclick="addNewModel()">
+                    <button id="learnButton" type="button" disabled="disabled" onclick="addNewModel()">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -76,18 +76,20 @@
             </section>
             <section id="control">
                 <div id="two">
+                    
                     <h1 id="dropTitle">Drop file here or click to upload</h1>
-                      <div class="drop-zone">
-                        <span class="drop-zone__prompt">Detect</span>
-                        <input id="textInput" type="file" name="myFile" class="drop-zone__input">
+                      <div class="drop-zone-detect">
+                        <span class="drop-zone__prompt-detect">Detect</span>
+                        <input id="textInput" type="file" name="myFile" class="drop-zone__input-detect">
                       </div>
                       <form action="/" method="GET" class="form">
-                        <input type="search" placeholder="Model ID" class="search-field" />
-                        <button type="submit" class="search-button">
+                        <input id="detectModelId" type="number" placeholder="Model ID" class="search-field" value="1"/>
+                            <!---
                           <img src="search.png">
+                          <!-->
                         </button>
                       </form>
-                    <button id="addButton" onclick="detectAnomalies()">
+                    <button id="detectButton" disabled="disabled" onclick="addAnomalies()">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </button>
                 </div>
