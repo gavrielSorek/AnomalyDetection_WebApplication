@@ -20,3 +20,21 @@ __Project Structure:__
 
 [![project-Structure.png](https://i.postimg.cc/sxZXWbz5/project-Structure.png)](https://postimg.cc/JHMMV6Gh)
 
+1)	AnomalyDetectorByOs –
+contain native code of anomaly detector for windows ,linux and mac.
+2)	controller – 
+responsible of the server logic (server response logic).
+This folder contains the server code. 
+3)	Model –
+the main and only model of the project, implements the ( ) design pattern and its responsible of the business logic of the project.
+Contains the logic parts of the application such as detect anomalies by Contact the anomaly detector, parse the result from the anomaly detector and so on.
+4)	view – 
+This folder contains the view logic.
+
+__Installation requirements:__
+
+computer
+
+__Installation Instructions:__
+
+__UML and MVVM design pattern:__
