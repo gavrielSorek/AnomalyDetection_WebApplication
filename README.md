@@ -13,8 +13,10 @@ _Application open screen:_
 
 •	detect – upload file which the client want to investigate to designed box, the server will detect anomalies and return it back to client.
 
-•	Graphs – after uploading the anomaly file, by looking the the graphs we can see the data of our anomalies file, and the anomalies wich marked with red dots.
+•	Graphs – after uploading the anomaly file, by looking the the graphs we can see the data of our anomalies file represent by graph, and the anomalies wich marked with red dots.
 We can select any feature from the feature list.
+
+•	Table – after uploading the anomaly file, by looking the the table we can see the data of our anomalies file.
 
 __Project Structure:__
 
@@ -37,4 +39,4 @@ computer
 
 __Installation Instructions:__
 
-__UML and MVVM design pattern:__
+__UML and Restful Api pattern:__
