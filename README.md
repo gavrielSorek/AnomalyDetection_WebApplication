@@ -37,4 +37,4 @@ computer
 
 __Installation Instructions:__
 
-__UML and MVVM design pattern:__
+__UML and Restful Api pattern:__
