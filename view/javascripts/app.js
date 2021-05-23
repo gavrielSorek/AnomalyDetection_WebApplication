@@ -1,6 +1,7 @@
 const results = [];
 var globalLearnjsonObject = null;
 var globalDetectjsonObject = null;
+var globalAnomaliesJsonObject = null;
 var globalData = null;
 
 console.log("the application up")
@@ -357,10 +358,8 @@ function updateThumbnail(dropZoneElement, file) {
       }
       var jsonResponse = Http.response;
       console.log(jsonResponse);
-
+      globalAnomaliesJsonObject = JSON.parse(Http.responseText); 
   }
-
-  
   };
 
 //functions for create a table
@@ -433,15 +432,21 @@ function getCells(data, type) {
 
 
 function updateGraph() {
-  console.log("click on element from the list, the index is:")
-  console.log(document.getElementById("chartType").value);
   var col = getColumn();
-  createNewGraph(col);
+  if(!globalAnomaliesJsonObject) {
+    createNewGraph(col, null);
+  } else {
+    createNewGraph(col, globalAnomaliesJsonObject);
+  }
 }
-
 
 function createSelectList(items) {
   var chartType = document.getElementById("chartType");
+  //remove the old options from the list if exist
+  var i, L = chartType.options.length - 1;
+  for(i = L; i >= 0; i--) {
+    chartType.remove(i);
+  }
   //Create and append the options
   for (var i = 0; i < items.length; i++) {
       var option = document.createElement("option");
@@ -453,26 +458,65 @@ function createSelectList(items) {
 
 
 //create graph from array
-function createNewGraph(colData) {
+function createNewGraph(colData, anomalyData) {
 	var xArr = [];
   var yArr = [];
+  var colName = colData[0];
+
+  var anomaliesBubbleData = [];
+  var xAnomaliesArr = [];
+  var yAnomaliesArr = [];
+
+  console.log("anomalyData:")
+  console.log(anomalyData)
+
+  
+  if(anomalyData) {
+    Object.keys(anomalyData).forEach(function(key) {
+      //console.log("key:" + key + "value:" + anomalyData[key])
+      if(key == colName) {
+        xAnomaliesArr = anomalyData[key];
+      }
+    })
+  }
+
+  if(xAnomaliesArr) {
+    for(var i = 0; i < xAnomaliesArr.length; i++) {
+      // var anomalyItem = {};
+      jsonItemTst = {
+        x: xAnomaliesArr[i],
+        y: colData[xAnomaliesArr[i]],
+        r: 5
+      };
+      anomaliesBubbleData.push(jsonItemTst);
+      console.log("anomaliesBubbleData:" + anomaliesBubbleData)
+    }
+  }
+  console.log("anomaliesBubbleData:" + anomaliesBubbleData)
 
   for (let i = 0; i < colData.length; i++) {
     xArr.push(i.toString());
   }
-
-  console.log("xArr:");
-  console.log(xArr);
-
+  
   for(var i = 1; i < colData.length; i++) {
 		yArr.push(colData[i]);
 	}
-  console.log("yArr:");
-  console.log(yArr);
+
+  
 
   myData = {
     labels: xArr,
     datasets: [{
+      type: 'bubble',
+      label: 'Anomalies',
+      data: anomaliesBubbleData,
+      backgroundColor: 'rgb(255, 99, 71, 1)',
+      borderColor: 'rgb(255, 99, 71)',
+      fill: true,
+      cubicInterpolationMode: 'monotone',
+      tension: 0.4
+    },
+    {
         label: colData[0],
         data: yArr,
         backgroundColor: 'rgb(129, 207, 224, 0.25)',
@@ -480,7 +524,8 @@ function createNewGraph(colData) {
         fill: true,
         cubicInterpolationMode: 'monotone',
         tension: 0.4
-      }]
+      }
+    ]
 };
 
 var options = {
@@ -502,15 +547,16 @@ var options = {
         ticks: {
            fontColor: 'rgb(129, 207, 224)',
            beginAtZero: true,
-           maxTicksLimit: 5,
-           stepSize: Math.ceil(250 / 5),
-           max: 250
+           //maxTicksLimit: 5,
+           //stepSize: Math.ceil(250 / 5),
+           //max: 250
         },
         gridLines: {
           zeroLineColor: 'rgb(129, 207, 224)'
       }
      }]
   }
+
 };
 
 
