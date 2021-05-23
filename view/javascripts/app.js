@@ -49,7 +49,7 @@ function deleteEverything() {
     location.reload();
 }
 
-//detect drop off 
+//learn drop off 
 document.querySelectorAll(".drop-zone__input-learn").forEach((inputElement) => {
   const dropZoneElement = inputElement.closest(".drop-zone-learn");
 
@@ -59,9 +59,8 @@ document.querySelectorAll(".drop-zone__input-learn").forEach((inputElement) => {
 
   //for the case of click to upload file
   inputElement.addEventListener("change", (e) => {
-    
     const reader = new FileReader();
-    if(inputElement.files[0].type != "text/csv") {
+    if(!inputElement.files[0].name.toLowerCase().endsWith(".csv")) {
       Swal.fire({
         title: "Error",
         text: "Please upload a csv file",
@@ -165,120 +164,7 @@ function updateThumbnail(dropZoneElement, file) {
 }
 
 
-// //learn drop off 
-// document.querySelectorAll(".drop-zone__input-learn").forEach((inputElement) => {
-//     const dropZoneElement = inputElement.closest(".drop-zone-learn");
-  
-//     dropZoneElement.addEventListener("click", (e) => {
-//       inputElement.click();
-//     });
-  
-//     //for the case of click to upload file
-//     inputElement.addEventListener("change", (e) => {
-      
-//       const reader = new FileReader();
-//       if(inputElement.files[0].type != "text/csv") {
-//         Swal.fire({
-//           title: "Error",
-//           text: "Please upload a csv file",
-//           icon: "warning",
-//           showCancelButton: true,
-//           confirmButtonColor: "#3085d6",
-//           cancelButtonColor: "#d33",
-//       });
-//       } else {
-//         updateThumbnail(dropZoneElement, inputElement.files[0]);
-//         reader.onload = function () {
-//           const lines = reader.result.split(/\r?\n/).map(function(line) {
-//               return line.split(',')
-//           })
-          
-//           globalData = lines;
-//           createSelectList(lines[0]);
-//           createTable(lines);
 
-//           var jsonObject = CSVToJSON(lines);
-//           globalLearnjsonObject = jsonObject;
-//           console.log(jsonObject);
-          
-//       }
-//       reader.readAsText(inputElement.files[0]);
-//       document.getElementById("learnButton").removeAttribute('disabled');
-//       }
-//     });
-  
-//     dropZoneElement.addEventListener("dragover", (e) => {
-//       e.preventDefault();
-//       dropZoneElement.classList.add("drop-zone-learn--over");
-//     });
-  
-//     ["dragleave", "dragend"].forEach((type) => {
-//       dropZoneElement.addEventListener(type, (e) => {
-//         dropZoneElement.classList.remove("drop-zone-learn--over");
-//       });
-//     });
-  
-//     dropZoneElement.addEventListener("drop", (e) => {
-//         console.log("loploploplop");
-//       e.preventDefault();
-  
-//       if (e.dataTransfer.files.length) {
-//         inputElement.files = e.dataTransfer.files;
-//         updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
-//       }
-      
-//       //for the case of drop file for upload 
-//       dropZoneElement.classList.remove("drop-zone-learn--over");
-//       const reader = new FileReader();
-//       reader.onload = function () {
-//           const lines = reader.result.split(/\r?\n/).map(function(line) {
-//               return line.split(',')
-//           })
-//           //createGraph(lines);
-//           createTable(lines);
-
-//           var jsonObject = CSVToJSON(lines);
-//           console.log(jsonObject);
-
-//       }
-//       reader.readAsText(inputElement.files[0]);
-//     });
-//   });
-  
-//   /**
-//    * Updates the thumbnail on a drop zone element
-//    * @param {HTMLElement} dropZoneElement
-//    * @param {File} file
-//    */
-//   function updateThumbnail(dropZoneElement, file) {
-//     let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb-learn");
-  
-//     // First time - remove the prompt
-//     if (dropZoneElement.querySelector(".drop-zone__prompt-learn")) {
-//       dropZoneElement.querySelector(".drop-zone__prompt-learn").remove();
-//     }
-  
-//     // First time - there is no thumbnail element, so lets create it
-//     if (!thumbnailElement) {
-//       thumbnailElement = document.createElement("div");
-//       thumbnailElement.classList.add("drop-zone__thumb-learn");
-//       dropZoneElement.appendChild(thumbnailElement);
-//     }
-  
-//     thumbnailElement.dataset.label = file.name;
-
-//     // Show thumbnail for image files
-//     if (file.type.startsWith("image/")) {
-//       const reader = new FileReader();
-  
-//       reader.readAsDataURL(file);
-//       reader.onload = () => {
-//         thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
-//       };
-//     } else {
-//       thumbnailElement.style.backgroundImage = null;
-//     }
-//   }
  
  /*********************************************************/ 
 
@@ -295,7 +181,7 @@ document.querySelectorAll(".drop-zone__input-detect").forEach((inputElement) => 
   inputElement.addEventListener("change", (e) => {
     
     const reader = new FileReader();
-    if(inputElement.files[0].type != "text/csv") {
+    if(!inputElement.files[0].name.toLowerCase().endsWith(".csv")) {
       Swal.fire({
         title: "Error",
         text: "Please upload a csv file",
@@ -469,7 +355,7 @@ function updateThumbnail(dropZoneElement, file) {
           cancelButtonColor: "#d33",
       });
       }
-      var jsonResponse = JSON.parse(Http.responseText);
+      var jsonResponse = Http.response;
       console.log(jsonResponse);
 
   }
