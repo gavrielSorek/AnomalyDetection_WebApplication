@@ -37,7 +37,7 @@
         
     </head>
 
-    <body >
+    <body>
         <div id="list">
             <div id="buttonClear">
                 <button id="clear" style="font-size: 24px;">
@@ -71,8 +71,17 @@
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </button>
                 </div>
-                
             </section>
+
+            <section id="control">
+                <div id="modelsList">
+                    <select id="modelsSelectList" multiple="multiple"></select>
+                    <form action="/" method="GET" class="form">
+                        <input id="deleteModelId" type="number" placeholder="Model ID to delete" class="search-field"/>
+                      </form>
+                </div>
+            </section>
+
             <section id="control">
                 <div id="two">
                     <h1 id="dropTitle">Drop file here or click to upload</h1>
@@ -82,8 +91,6 @@
                       </div>
                       <form action="/" method="GET" class="form">
                         <input id="detectModelId" type="number" placeholder="Model ID" class="search-field" value="1"/>
-                        
-                        </button>
                       </form>
                       <button id="detectButton" disabled="disabled" onclick="addAnomalies()">
                         <i class="fa fa-plus" aria-hidden="true"></i>
@@ -105,7 +112,7 @@
                         <div class="graphs" id="chart" style="width: 1200px;max-width:3000px;height:80%;max-height:1000px;position: relative;"></div>
                         <--->
                         <div class="chart-container" id="chart-container">
-                            <canvas id="myChart" style="width: 800px; height:60%"  ></canvas>
+                            <canvas id="myChart" style="width: 800px; height:60%"></canvas>
                           </div>    
 
                     </section>

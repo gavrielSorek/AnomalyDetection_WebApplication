@@ -3,15 +3,22 @@ var globalLearnjsonObject = null;
 var globalDetectjsonObject = null;
 var globalAnomaliesJsonObject = null;
 var globalData = null;
+var globalId = 1;
 
 console.log("the application up")
+
+//call function every 5 sec
+var intervalId = window.setInterval(function(){
+  //console.log("passed 5 seconds")
+  getModels();
+}, 5000);
 
 //variables definition
 const detectButton = document.getElementById("detectButton");
 const learnButton = document.getElementById("learnButton");
+var modelsSelectList = document.getElementById("modelsSelectList");
 
 const title = document.getElementById("title");
-
 
 function addNewModel() {
     modelType = checkClicked();
@@ -309,7 +316,6 @@ function updateThumbnail(dropZoneElement, file) {
   }
   var jsonObj = JSON.stringify(js); //JSON
   return jsonObj;
-
   }
 
   function checkClicked() {
@@ -333,6 +339,29 @@ function updateThumbnail(dropZoneElement, file) {
     Http.setRequestHeader("Access-Control-Allow-Origin", "*")
     Http.setRequestHeader("Content-Type", "application/json");
     Http.send(jsonData);
+
+    Http.onreadystatechange = (e) => {
+      if(Http.status == 200) {
+        Swal.fire({
+          title: "Success",
+          text: "New model created",
+          icon: "success",
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+      });
+      } else if(Http.status == 400) {
+        Swal.fire({
+          title: "Error",
+          text: "New model created",
+          icon: "error",
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+      });
+      }
+      var jsonResponse = Http.response;
+      console.log(jsonResponse);
+      globalAnomaliesJsonObject = JSON.parse(Http.responseText); 
+  }
   };
 
   const detectAnomalies = (id, jsonData) => {
@@ -343,7 +372,6 @@ function updateThumbnail(dropZoneElement, file) {
     Http.setRequestHeader("Content-Type", "application/json");
     Http.send(jsonData);
 
-    
     Http.onreadystatechange = (e) => {
       if(Http.status == 420) {
         console.log("error 420")
@@ -385,6 +413,7 @@ function getCells(data, type) {
 
   function createTable(data) {
     var myTableDiv = document.getElementById("myDynamicTable");
+    myTableDiv.innerHTML="";
   
     var table = document.createElement('TABLE');
     table.border = '1';
@@ -579,6 +608,43 @@ data: myData,
 options: options
 });
 
+}
+
+
+function getModels () {
+  const Http = new XMLHttpRequest();
+  const url='http://localhost:9876/api/models';
+  Http.open("GET", url);
+  Http.withCredentials = false;
+  Http.send();
+  
+  Http.onreadystatechange = (e) => {
+      var jsonResponse = JSON.parse(Http.responseText);
+      console.log("jsonResponse:" + jsonResponse)
+      //update the models list
+      updateModelsList(jsonResponse);
+      //setModels(jsonResponse);
+  }
+}
+
+function updateModelsList(modelsData) {
+  //remove the old options from the list if exist
+  var i, L = modelsSelectList.options.length - 1;
+  for(i = L; i >= 0; i--) {
+    modelsSelectList.remove(i);
+  }
+
+  for(var i = 0; i < modelsData.length; i++) {
+    modelItem = modelsData[i]
+    var id = modelItem["model_id"]
+    //var time = modelItem["upload_time"]
+    var status = modelItem["status"]
+    var option = document.createElement("option");
+    var modelInfo = "model ID:   " + id + "     status: " + status;
+    option.setAttribute("value", id);
+    option.text = modelInfo;
+    modelsSelectList.appendChild(option);
+  }
 }
 
 

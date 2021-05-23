@@ -140,6 +140,20 @@ body {
   animation-fill-mode: forwards;
 }
 
+#modelsList {
+  grid-area: c;
+  display: flex;
+  /* background-color: rgba(255, 255, 255, 0.3); */
+  padding: 1em;
+  border-radius: 5em;
+  animation-name: rainbow1;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
+  position: relative;
+  height: 70%;
+}
+
 @keyframes rainbow1 {
   0% {
     background-image: url("https://static.vecteezy.com/system/resources/previews/001/972/049/non_2x/low-poly-grey-and-white-background-design-with-geometric-triangles-free-vector.jpg");
@@ -208,8 +222,17 @@ body {
   margin-right: 5px;
   transition: all ease 400ms;
 }
+
 #prioritySelector:hover {
   background-color: white;
+}
+
+#modelsSectionList {
+  grid-area: c;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: aqua;
 }
 
 #learnButton:disabled,
@@ -596,4 +619,41 @@ input[type="checkbox"] {
   left: 25%;
   height: 80%;
   margin-top: 130px;
+}
+
+.modelContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgba(153, 249, 153, 0.87);
+  box-shadow: 0.3em 0.3em 0.5em white;
+  margin: 0.5rem;
+  border-radius: 10px;
+  padding: 1em;
+  height: 3em;
+  transition: all ease 600ms;
+}
+.modelText {
+  flex: 5;
+  text-align: center;
+  font-weight: bold;
+}
+
+.status {
+  flex: 2;
+}
+
+#modelsSelectList {
+  background-color: transparent;
+  height: 100%;
+  width: 100%;
+  border-radius: 1em;
+  text-align: center;
+}
+
+#deleteModelId {
+  height: 100%;
+  width: 100%;
+  border-radius: 1em;
+  text-align: center;
 }
