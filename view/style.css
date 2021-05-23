@@ -9,15 +9,6 @@
   outline: none;
 }
 
-body {
-  background-image: url("https://media.giphy.com/media/3osxYzuMvUJJcqzND2/giphy.gif");
-  background-size: cover;
-
-  height: 100vh;
-  padding: 0;
-  margin: 0;
-}
-
 #list {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -25,10 +16,22 @@ body {
   gap: 0px 0px;
   grid-template-areas: "clear title title title title nameOfList" "control control control control control control" "performed performed performed view view view" "performed performed performed view view view" "performed performed performed view view view";
   height: 100vh;
-  background-image: url("https://s3.gifyu.com/images/ezgif-7-d2bcdc1c599f5818402d134fa863.gif");
+  background-image: url("https://static.vecteezy.com/system/resources/previews/000/691/365/large_2x/navy-blue-gradient-geometric-background-vector.jpg");
+  background-color: #ffffff;
   background-size: cover;
+  color: #ffffff;
 }
-
+/*
+body {
+  /*background-image: url("https://media.giphy.com/media/3osxYzuMvUJJcqzND2/giphy.gif");*/
+/*
+  background-image: url("https://static.vecteezy.com/system/resources/previews/000/691/365/large_2x/navy-blue-gradient-geometric-background-vector.jpg");
+  background-size: cover;
+ 
+   padding: 0;
+   margin: 0;
+ }
+ */
 #title {
   color: white;
   grid-area: title;
@@ -41,6 +44,24 @@ body {
   background-color: rgba(190, 190, 190, 0.3);
   padding: 0.2em;
   border-radius: 0.5em;
+  margin-left: auto;
+  margin-right: auto;
+}
+#titleTable {
+  color: white;
+  grid-area: title;
+  margin: auto;
+  font-size: 4rem;
+  text-shadow: 0 0 15px white;
+  text-decoration: underline;
+  font-family: "Raleway", sans-serif;
+  margin-bottom: 0.5em;
+  background-color: rgba(190, 190, 190, 0.3);
+  padding: 0.2em;
+  border-radius: 0.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #buttonTitle {
   display: flex;
@@ -113,30 +134,47 @@ body {
   /* background-color: rgba(255, 255, 255, 0.3); */
   padding: 1em;
   border-radius: 5em;
-  animation-name: rainbow;
+  animation-name: rainbow1;
   animation-duration: 10s;
   animation-iteration-count: infinite;
   animation-fill-mode: forwards;
 }
 
-@keyframes rainbow {
+@keyframes rainbow1 {
   0% {
-    background-color: rgba(122, 131, 255, 0.4);
+    background-image: url("https://static.vecteezy.com/system/resources/previews/001/972/049/non_2x/low-poly-grey-and-white-background-design-with-geometric-triangles-free-vector.jpg");
   }
   25% {
-    background-color: rgba(122, 255, 122, 0.4);
+    background-image: url("https://static.vecteezy.com/system/resources/previews/001/972/049/non_2x/low-poly-grey-and-white-background-design-with-geometric-triangles-free-vector.jpg");
   }
   50% {
-    background-color: rgba(253, 255, 122, 0.4);
+    background-image: url("https://static.vecteezy.com/system/resources/previews/001/972/049/non_2x/low-poly-grey-and-white-background-design-with-geometric-triangles-free-vector.jpg");
   }
   75% {
-    background-color: rgba(190, 190, 190, 0.4);
+    background-image: url("https://static.vecteezy.com/system/resources/previews/001/972/049/non_2x/low-poly-grey-and-white-background-design-with-geometric-triangles-free-vector.jpg");
   }
   100% {
-    background-color: rgba(122, 131, 255, 0.4);
+    background-image: url("https://static.vecteezy.com/system/resources/previews/001/972/049/non_2x/low-poly-grey-and-white-background-design-with-geometric-triangles-free-vector.jpg");
   }
 }
 
+@keyframes rainbow2 {
+  0% {
+    background-image: url("https://static.vecteezy.com/system/resources/previews/001/972/049/non_2x/low-poly-grey-and-white-background-design-with-geometric-triangles-free-vector.jpg");
+  }
+  25% {
+    background-image: url("https://static.vecteezy.com/system/resources/previews/001/972/049/non_2x/low-poly-grey-and-white-background-design-with-geometric-triangles-free-vector.jpg");
+  }
+  50% {
+    background-image: url("https://static.vecteezy.com/system/resources/previews/001/972/049/non_2x/low-poly-grey-and-white-background-design-with-geometric-triangles-free-vector.jpg");
+  }
+  75% {
+    background-image: url("https://static.vecteezy.com/system/resources/previews/001/972/049/non_2x/low-poly-grey-and-white-background-design-with-geometric-triangles-free-vector.jpg");
+  }
+  100% {
+    background-image: url("https://static.vecteezy.com/system/resources/previews/001/972/049/non_2x/low-poly-grey-and-white-background-design-with-geometric-triangles-free-vector.jpg");
+  }
+}
 #textInput {
   background-color: rgba(255, 255, 255, 0.7);
   padding: 10px 12px;
@@ -165,7 +203,7 @@ body {
   background-color: rgba(255, 255, 255, 0.7);
   padding: 10px 12px;
   border-radius: 10px;
-  color: black;
+  color: #ffffff;
   font-size: 2em;
   margin-right: 5px;
   transition: all ease 400ms;
@@ -211,14 +249,13 @@ body {
   background-color: rgb(40, 229, 40);
   color: black;
 }
-
 #two {
   grid-area: b;
   display: flex;
   /* background-color: rgba(255, 255, 255, 0.3); */
   padding: 1em;
   border-radius: 5em;
-  animation-name: rainbow;
+  animation-name: rainbow2;
   animation-duration: 10s;
   animation-iteration-count: infinite;
   animation-fill-mode: forwards;
@@ -435,6 +472,8 @@ input[type="checkbox"] {
 
 #charts {
   position: relative;
+  background-image: url("https://static.vecteezy.com/system/resources/previews/000/691/365/large_2x/navy-blue-gradient-geometric-background-vector.jpg");
+
   background-color: white;
   height: 100vh;
   width: 208vh;
@@ -489,55 +528,72 @@ input[type="checkbox"] {
 }
 
 #table {
-  background-color: cornflowerblue;
-  height: 80vh;
+  background-image: url("https://static.vecteezy.com/system/resources/previews/000/691/365/large_2x/navy-blue-gradient-geometric-background-vector.jpg");
+  height: 100%;
   width: 208vh;
   background-size: cover;
+  position: absolute;
 }
 
 #myDynamicTable {
   margin-left: auto;
   margin-right: auto;
+  position: relative;
   width: 1000px;
-  height: 500px;
+  height: 80px;
   overflow: auto;
+  margin-top: 40px;
 }
 
 /* width */
+/*
 #myDynamicTable::-webkit-scrollbar {
   width: 20px;
+  height:1000px ;
 }
-
+/*
 /* Track */
+/*
 #myDynamicTable::-webkit-scrollbar-track {
   box-shadow: inset 0 0 5px grey;
   border-radius: 10px;
 }
-
+*/
 /* Handle */
+/*
 #myDynamicTable::-webkit-scrollbar-thumb {
+  /*
   background: rgb(205, 200, 200);
   border-radius: 10px;
+
 }
+*/
 
 /* Handle on hover */
+/*
 #myDynamicTable::-webkit-scrollbar-thumb:hover {
   background: black;
 }
+*/
 
 #chartType {
-  background-color: rgb(129, 207, 224);
+  background-image: url("https://static.vecteezy.com/system/resources/previews/000/691/365/large_2x/navy-blue-gradient-geometric-background-vector.jpg");
   width: 20%;
   position: absolute;
   top: 0;
-  left: 0.2%;
-  height: 100%;
+  left: 2%;
+  height: 80%;
+  color: #ffffff;
+  margin-top: 130px;
 }
 
 #chart-container {
+  background-color: white;
+
   width: 1000px;
   position: absolute;
   top: 0;
   left: 25%;
-  height: 100%;
+  height: 80%;
+  margin-top: 130px;
 }

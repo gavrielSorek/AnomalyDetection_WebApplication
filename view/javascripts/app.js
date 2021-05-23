@@ -397,7 +397,17 @@ function getCells(data, type) {
   
     for (var i = 0; i < numOfRows; i++) {
       var tr = document.createElement('TR');
-      tr.style.backgroundColor = '#ffffff';
+      if(i==0){
+        tr.style.backgroundColor = 'RGBA(0,2,90,1)';
+        tr.style.width="50%";
+        tr.style.color='#FFFFFF';
+      }
+      if(i !=0 && i%2 ==0 ){
+        tr.style.backgroundColor = '#E5E8E8';
+      }
+      if( i%2 !=0 ){
+        tr.style.backgroundColor = '#FFFFFF';
+      }
       tr.style.boxShadow = '0px 0px 9px 0px rgba(0,0,0,0.1)';
       tr.style.textAlign = 'center'
       tr.style.justifyContent = 'space-between'
@@ -519,8 +529,8 @@ function createNewGraph(colData, anomalyData) {
     {
         label: colData[0],
         data: yArr,
-        backgroundColor: 'rgb(129, 207, 224, 0.25)',
-        borderColor: 'rgb(129, 207, 224)',
+        backgroundColor: 'RGBA(0,2,90,0.25)',
+        borderColor: 'RGBA(0,2,90,1)',
         fill: true,
         cubicInterpolationMode: 'monotone',
         tension: 0.4
@@ -532,27 +542,27 @@ var options = {
   responsive: true,
   maintainAspectRatio: false,
   legend: {
-     fontColor: 'rgb(129, 207, 224)',
+     fontColor: 'RGBA(0,2,90,1)',
   },
   scales: {
      xAxes: [{
         ticks: {
-           fontColor: 'rgb(129, 207, 224)',
+           fontColor: 'RGBA(0,2,90,1)',
         },
         gridLines: {
-          zeroLineColor: 'rgb(129, 207, 224)'
+          zeroLineColor: 'RGBA(0,2,90,1)'
       }
      }],
      yAxes: [{
         ticks: {
-           fontColor: 'rgb(129, 207, 224)',
+           fontColor: 'RGBA(0,2,90,1)',
            beginAtZero: true,
            //maxTicksLimit: 5,
            //stepSize: Math.ceil(250 / 5),
            //max: 250
         },
         gridLines: {
-          zeroLineColor: 'rgb(129, 207, 224)'
+          zeroLineColor: 'RGBA(0,2,90,1)'
       }
      }]
   }

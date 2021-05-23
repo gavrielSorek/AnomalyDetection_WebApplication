@@ -67,8 +67,7 @@
                             </label>
                           </div>
                       </div>
-
-                    <button id="learnButton" type="button" disabled="disabled" onclick="addNewModel()">
+                      <button id="learnButton" type="button" disabled="disabled" onclick="addNewModel()">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -76,20 +75,17 @@
             </section>
             <section id="control">
                 <div id="two">
-                    
                     <h1 id="dropTitle">Drop file here or click to upload</h1>
-                      <div class="drop-zone-detect">
+                    <div class="drop-zone-detect">
                         <span class="drop-zone__prompt-detect">Detect</span>
                         <input id="textInput" type="file" name="myFile" class="drop-zone__input-detect">
                       </div>
                       <form action="/" method="GET" class="form">
                         <input id="detectModelId" type="number" placeholder="Model ID" class="search-field" value="1"/>
-                            <!---
-                          <img src="search.png">
-                          <!-->
+                        
                         </button>
                       </form>
-                    <button id="detectButton" disabled="disabled" onclick="addAnomalies()">
+                      <button id="detectButton" disabled="disabled" onclick="addAnomalies()">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -101,21 +97,22 @@
         </div>
 
             <div id="charts">
-                <section id="control"></section>                        
+                <section id="control"></section>             
+                <h3 id="titleTable">Graph Data</h3>           
                     <select name="chartType" id="chartType" multiple="multiple" onchange="updateGraph()"></select>
                     <!---
                         <div class="container" style="width: 100%;;max-width:3000px;height:1000px;max-height:1000px;">
                         <div class="graphs" id="chart" style="width: 1200px;max-width:3000px;height:80%;max-height:1000px;position: relative;"></div>
                         <--->
                         <div class="chart-container" id="chart-container">
-                            <canvas id="myChart" style="width: 800px; height:80%" ></canvas>
+                            <canvas id="myChart" style="width: 800px; height:60%"  ></canvas>
                           </div>    
 
                     </section>
             </div>
-
             <div id="table">
-                <div id="myDynamicTable"></div>
+                <h2 id="titleTable">Table Data</h2>
+                <div id="myDynamicTable" style="width: 1050px; height:80%"></div>
             </div>
     </body>
     <script src="javascripts/app.js"></script>
