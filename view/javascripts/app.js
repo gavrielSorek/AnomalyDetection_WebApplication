@@ -17,8 +17,14 @@ var intervalId = window.setInterval(function(){
 const detectButton = document.getElementById("detectButton");
 const learnButton = document.getElementById("learnButton");
 var modelsSelectList = document.getElementById("modelsSelectList");
-
+var modelIDtoDelete = document.getElementById("deleteModelId")
 const title = document.getElementById("title");
+
+document.getElementById('modelsSelectList').addEventListener('change', function() {
+  console.log('You selected:', this.value);
+  modelIDtoDelete.value= this.value;
+});
+
 
 function addNewModel() {
     modelType = checkClicked();
@@ -628,6 +634,7 @@ function getModels () {
 }
 
 function updateModelsList(modelsData) {
+  var selectID = modelsSelectList.value;
   //remove the old options from the list if exist
   var i, L = modelsSelectList.options.length - 1;
   for(i = L; i >= 0; i--) {
@@ -642,9 +649,32 @@ function updateModelsList(modelsData) {
     var option = document.createElement("option");
     var modelInfo = "model ID:   " + id + "     status: " + status;
     option.setAttribute("value", id);
+    option.setAttribute("model_id",id);
     option.text = modelInfo;
     modelsSelectList.appendChild(option);
+    if(selectID==id)
+      modelsSelectList.value=id;
   }
+}
+
+
+function deleteModel(){
+  let id = modelIDtoDelete.value;
+  const Http = new XMLHttpRequest();
+  const url='http://localhost:9876/api/model?model_id='+ id;
+  Http.open("DELETE", url);
+  Http.setRequestHeader("Access-Control-Allow-Origin", "*")
+  Http.send();
+  
+  Http.onreadystatechange = (e) => {
+    getModels();
+      if(Http.status == 200){
+        console.log("item delete suscssfully");
+      }
+      else{
+        console.log("error, cant delete item");
+      }
+    }
 }
 
 

@@ -74,11 +74,13 @@
             </section>
 
             <section id="control">
-                <div id="modelsList">
+                <div id="modelsList">Model list
                     <select id="modelsSelectList" multiple="multiple"></select>
                     <form action="/" method="GET" class="form">
-                        <input id="deleteModelId" type="number" placeholder="Model ID to delete" class="search-field"/>
+                        <input id="deleteModelId" type="number" value="1" placeholder="Model ID to delete" class="search-field"/>
                       </form>
+                      <button id="deleteModel" type="button" onclick="deleteModel()">
+                        <i aria-hidden="true">delete model</i>
                 </div>
             </section>
 
