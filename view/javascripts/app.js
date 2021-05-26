@@ -95,7 +95,7 @@ document.querySelectorAll(".drop-zone__input-learn").forEach((inputElement) => {
 
         var jsonObject = CSVToJSON(lines);
         globalLearnjsonObject = jsonObject;
-        console.log(jsonObject, nu);
+        console.log(jsonObject);
         
     }
     reader.readAsText(inputElement.files[0]);
@@ -351,8 +351,10 @@ function updateThumbnail(dropZoneElement, file) {
     Http.send(jsonData);
 
     Http.onreadystatechange = (e) => {
+      getModels();
       if(Http.status == 200) {
         Swal.fire({
+          timer: 4000,
           title: "Success",
           text: "New model created",
           icon: "success",
@@ -385,6 +387,7 @@ function updateThumbnail(dropZoneElement, file) {
     Http.onreadystatechange = (e) => {
       if(Http.status == 200) {
         Swal.fire({
+          timer: 4000,
           title: "Success",
           text: "Anomalies Detected",
           icon: "success",
@@ -661,11 +664,11 @@ function getModels () {
   const url='http://localhost:9876/api/models';
   Http.open("GET", url);
   Http.withCredentials = false;
+  Http.setRequestHeader("Content-Type", "application/json");
   Http.send();
-  
   Http.onreadystatechange = (e) => {
       var jsonResponse = JSON.parse(Http.responseText);
-      console.log("jsonResponse:" + jsonResponse)
+    //  console.log("jsonResponse:" + jsonResponse)
       //update the models list
       updateModelsList(jsonResponse);
       //setModels(jsonResponse);
@@ -706,13 +709,26 @@ function deleteModel(){
   Http.send();
   
   Http.onreadystatechange = (e) => {
+    modelIDtoDelete.value=0;
     getModels();
-      if(Http.status == 200){
-        console.log("item delete suscssfully");
-      }
-      else{
-        console.log("error, cant delete item");
-      }
+    if(Http.status == 200) {
+      Swal.fire({
+        timer: 4000,
+        title: "Success",
+        text: "Model "+id+" deleted successfully",
+        icon: "success",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+    });
+    } else if(Http.status == 400) {
+      Swal.fire({
+        title: "Error",
+        text: "Could not delete model " + id+", Please try again",
+        icon: "error",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+    });
+    }
     }
 }
 
