@@ -15,6 +15,21 @@ var bodyParser = require('body-parser');
 const { Server } = require('http');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
+app.use(express.static("../view"));
+
+
+//get view
+app.get("/", function (req, res, next) { //next requrie (the function will not stop the program)
+   //res.sendFile('../view/index.html' , { root : __dirname});
+   //res.sendFile(path.join(__dirname, '../view/index.html'));
+   //console.log(__dirname + "\\..\\view\\index.html");
+   //res.sendFile(__dirname + "\\..\\view\\index.html");
+   res.sendFile("index.html");
+
+   res.status(200);
+   res.end();
+   next();
+})
 
 //post model
 app.post('/api/model', function (req, res, next) { //next requrie (the function will not stop the program)

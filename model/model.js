@@ -50,7 +50,15 @@ function moddelItem(id, type, datetime, status, fileName) {
 
 function writeTrain(req, res, data, writeCsvFinished) {
   let csvHeader = [];
+  let addedHeaders = {};
+
   for (const property in data) {
+    if(!addedHeaders[property]) { //if the headers wasn't added yet
+      addedHeaders[property] = 1;
+    } else { //if double columns
+      console.log('double columns ' + property);
+      return null;
+    }
     csvHeader.push({ id: property, title: property });
   }
   var currentId = id++;
@@ -195,7 +203,7 @@ function getAnomaliesFromString(anomaliesStr) {
       anomaliesObj[feature1].push(line);
       anomaliesObj[feature2].push(line);
     }
-    console.log(anomaliesObj);
+    //console.log(anomaliesObj);
     return anomaliesObj;
   }
 return {};
