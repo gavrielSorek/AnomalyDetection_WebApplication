@@ -351,6 +351,7 @@ function updateThumbnail(dropZoneElement, file) {
     Http.send(jsonData);
 
     Http.onreadystatechange = (e) => {
+      getModels();
       if(Http.status == 200) {
         Swal.fire({
           timer: 4000,
