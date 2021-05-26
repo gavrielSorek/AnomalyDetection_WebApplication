@@ -139,7 +139,11 @@ app.post('/api/anomaly', async (req, res, next) => {
             res.json(model.extractAnomalies(detector.DetectAnomalies(modelItem.annomalyFile)));
             res.status(200);
             res.end();
-         } else { //if model item not found
+         } else if (modelItem == null) {
+            res.status(495);
+            res.end();
+         }
+         else { //if model item not found
             res.status(420);
             console.log("model does not exsist");
             res.end();
