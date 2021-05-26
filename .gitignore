@@ -11,6 +11,7 @@
 
 # ignor csv files + node_modules folder
 model/*.csv
+node_modules/
 
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
