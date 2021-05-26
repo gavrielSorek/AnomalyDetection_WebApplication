@@ -46,7 +46,7 @@ __Installation Instructions:__
 
 __run the client instruction:__
 
-__if(you want to run the client from the same computer as the server)__ 
+__if (you want to run the client from the same computer as the server)__ 
 
  {
  
