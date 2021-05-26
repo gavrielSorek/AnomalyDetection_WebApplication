@@ -715,33 +715,33 @@ transform: rotateX(180deg);
   margin-left: 5%;
 }
 #arrowTag {
-  	
-    color: #ffffff;
-    background-color: transparent;
-  	
-    line-height: 1;
-  	
-    border: none;
-    padding: 10% 12%;
-    transition: background-color ease 400ms;
-    bottom: 80%;
-  	
-    display: inline;
-  }
-  #arrow {
-    color: #ffffff;
-  	
-    background-color: transparent;
-  	
-    line-height: 1;
-  	
-    border: none;
-  	
-    padding: 10% 12%;
-  	
-    transition: background-color ease 400ms;
-  	
-    bottom: 80%;
-    display: inline;
- 
-  }
+  color: #ffffff;
+  background-color: transparent;
+  line-height: 1;
+  border: none;
+  padding: 10% 12%;
+  transition: background-color ease 400ms;
+  bottom: 80%;
+  display: inline;
+  margin-right: 20%;
+}
+#arrow {
+  color: #ffffff;
+
+  background-color: transparent;
+
+  line-height: 1;
+
+  border: none;
+
+  padding: 10% 12%;
+
+  transition: background-color ease 400ms;
+
+  bottom: 80%;
+  display: inline;
+}
+
+#scroll {
+  text-align: center;
+}
