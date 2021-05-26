@@ -8,7 +8,7 @@ This project is a Web applictaion which represents a web anomaly detector. With 
 You can find [here!](http://google.com) the video of the project which demonstrates the features of the application.
 
 _Application open screen:_
-[![anomaly-Detector-Web.png](https://i.postimg.cc/7LhcP4wP/anomaly-Detector-Web.png)](https://postimg.cc/2qpTTP1g)
+[![new-Web-Photo.png](https://i.postimg.cc/TPNwsn6c/new-Web-Photo.png)](https://postimg.cc/f3XDttk3)
 •	learn – upload normal file to designed box, the server will learn from this file.
 
 •	detect – upload file which the client want to investigate to designed box, the server will detect anomalies and return it back to client.
