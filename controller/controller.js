@@ -156,5 +156,5 @@ var server = app.listen(9876, function () {
    var host = server.address().address
    var port = server.address().port
    server.maxConnections = 20;
-   console.log("Example app listening at http://%s:%s", host, port)
+   console.log("app listening at port: %s",port)
 })

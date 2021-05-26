@@ -50,17 +50,11 @@ function moddelItem(id, type, datetime, status, fileName) {
 
 function writeTrain(req, res, data, writeCsvFinished) {
   let csvHeader = [];
-  let addedHeaders = {};
 
   for (const property in data) {
-    if(!addedHeaders[property]) { //if the headers wasn't added yet
-      addedHeaders[property] = 1;
-    } else { //if double columns
-      console.log('double columns ' + property);
-      return null;
-    }
     csvHeader.push({ id: property, title: property });
   }
+  
   var currentId = id++;
   let path = "";
   if (os == "Windows") {
@@ -79,9 +73,15 @@ function writeTrain(req, res, data, writeCsvFinished) {
     //create array of object that contain the info of data accordingly to the titles
     var singleObj = {};
     for (const property in data) {
-      singleObj[property] = data[property][i];
+      if(data[property][i] != null) {
+        singleObj[property] = data[property][i];
+      }
     }
-    attrObjArry.push(singleObj);
+    if(JSON.stringify(singleObj) !== '{}') { //if not empty object
+     attrObjArry.push(singleObj);
+    }
+    //console.log(singleObj);
+
   }
   let date = new Date();
   var now = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + "T" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + date.getTimezoneOffset();
@@ -122,9 +122,13 @@ async function createAnnomalyFile(itemID, data) {
     //create array of object that contain the info of data accordingly to the titles
     var singleObj = {};
     for (const property in data) {
-      singleObj[property] = data[property][i];
+      if(data[property][i] != null) {
+        singleObj[property] = data[property][i];
+      }
     }
-    attrObjArry.push(singleObj);
+    if(JSON.stringify(singleObj) !== '{}') {
+      attrObjArry.push(singleObj);
+     }
   }
   modelItem = modelMap.get(parseInt(itemID));
   modelItem.annomalyFile = path;
@@ -141,8 +145,15 @@ function isMoudoleExsist(itemID) {
 
 function deleteModel(itemID) {
   let model = modelMap.get(parseInt(itemID));
-  if (model)
-    model.anomalyDetector.DeleteDetector(); // free the anommaly detector object 
+  if (model) {
+    model.anomalyDetector.DeleteDetector(); // free the anommaly detector object
+    try {
+      fs.unlinkSync(model.fileName);
+      fs.unlinkSync(model.annomalyFile);
+    } catch {
+      //do nothing
+    }
+  }
   modelMap.delete(parseInt(itemID));
 }
 
