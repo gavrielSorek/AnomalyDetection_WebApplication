@@ -44,7 +44,7 @@ __Installation Instructions:__
 3) write in terminal/cmd __node controller.js__ and press enter.
 4) now the server is up.
 
-__run the client__
+__run the client instruction:__
 1) if you want to run the client from the same computer as the server, open the browser and enter the uml: __127.0.0.1:9876__
 
 __UML and Restful Api pattern:__
