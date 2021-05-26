@@ -44,6 +44,15 @@
                     clear all data
                     <i class="fa fa-eraser" aria-hidden="true"></i>
                 </button>
+       
+                        </div>
+                        <div id="arrow">
+            	
+                            <button id="arrowTag" style="font-size: 150%;"></button>
+                                scroll down
+                                <i class="fa fa-angle-double-down" style="font-size:48px;color:red"></i>
+                            </button>
+                            </button>
             </div>
             <h1 id="title">Anomaly Detection</h1>
             <section id="control">
@@ -74,13 +83,17 @@
             </section>
 
             <section id="control">
-                <div id="modelsList">Model list
+                <div id="modelsList">
+                    <h1 id="dropTitle">Models list</h1>
                     <select id="modelsSelectList" multiple="multiple"></select>
                     <form action="/" method="GET" class="form">
                         <input id="deleteModelId" type="number" value="1" placeholder="Model ID to delete" class="search-field"/>
                       </form>
                       <button id="deleteModel" type="button" onclick="deleteModel()">
-                        <i aria-hidden="true">delete model</i>
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+
+                        <!-- <i aria-hidden="true">delete model</i> -->
                 </div>
             </section>
 
