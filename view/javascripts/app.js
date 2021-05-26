@@ -3,7 +3,6 @@ var globalLearnjsonObject = null;
 var globalDetectjsonObject = null;
 var globalAnomaliesJsonObject = null;
 var globalData = null;
-var globalId = 1;
 
 console.log("the application up")
 
@@ -92,11 +91,11 @@ document.querySelectorAll(".drop-zone__input-learn").forEach((inputElement) => {
         
         globalData = lines;
         createSelectList(lines[0]);
-        createTable(lines);
+        createTable(lines, null);
 
         var jsonObject = CSVToJSON(lines);
         globalLearnjsonObject = jsonObject;
-        console.log(jsonObject);
+        console.log(jsonObject, nu);
         
     }
     reader.readAsText(inputElement.files[0]);
@@ -131,14 +130,17 @@ document.querySelectorAll(".drop-zone__input-learn").forEach((inputElement) => {
         const lines = reader.result.split(/\r?\n/).map(function(line) {
             return line.split(',')
         })
-        //createGraph(lines);
-        createTable(lines);
+        globalData = lines;
+        createSelectList(lines[0]);
+        createTable(lines, null);
 
         var jsonObject = CSVToJSON(lines);
+        globalLearnjsonObject = jsonObject;
         console.log(jsonObject);
 
     }
     reader.readAsText(inputElement.files[0]);
+    document.getElementById("learnButton").removeAttribute('disabled');
   });
 });
 
@@ -178,8 +180,6 @@ function updateThumbnail(dropZoneElement, file) {
 }
 
 
-
- 
  /*********************************************************/ 
 
 
@@ -211,14 +211,13 @@ document.querySelectorAll(".drop-zone__input-detect").forEach((inputElement) => 
             return line.split(',')
         })
         
-        globalData = lines;
-        createSelectList(lines[0]);
-        createTable(lines);
-
         var jsonObject = CSVToJSON(lines);
         globalDetectjsonObject = jsonObject;
-        console.log(jsonObject);
-        
+
+        globalData = lines;
+        createSelectList(lines[0]);
+        createTable(lines, null);
+
     }
     reader.readAsText(inputElement.files[0]);
     document.getElementById("detectButton").removeAttribute('disabled');
@@ -252,14 +251,17 @@ document.querySelectorAll(".drop-zone__input-detect").forEach((inputElement) => 
         const lines = reader.result.split(/\r?\n/).map(function(line) {
             return line.split(',')
         })
-        //createGraph(lines);
-        createTable(lines);
 
         var jsonObject = CSVToJSON(lines);
-        console.log(jsonObject);
+        globalDetectjsonObject = jsonObject;
 
+        globalData = lines;
+        createSelectList(lines[0]);
+        createTable(lines, null);
+        
     }
     reader.readAsText(inputElement.files[0]);
+    document.getElementById("detectButton").removeAttribute('disabled');
   });
 });
 
@@ -358,7 +360,7 @@ function updateThumbnail(dropZoneElement, file) {
       } else if(Http.status == 400) {
         Swal.fire({
           title: "Error",
-          text: "New model created",
+          text: "Could not create new model, Please try again",
           icon: "error",
           confirmButtonColor: "#3085d6",
           cancelButtonColor: "#d33",
@@ -379,11 +381,19 @@ function updateThumbnail(dropZoneElement, file) {
     Http.send(jsonData);
 
     Http.onreadystatechange = (e) => {
-      if(Http.status == 420) {
+      if(Http.status == 200) {
+        Swal.fire({
+          title: "Success",
+          text: "Anomalies Detected",
+          icon: "success",
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+      }); 
+    } else if(Http.status == 420) {
         console.log("error 420")
         Swal.fire({
           title: "Error",
-          text: "model does not exist",
+          text: "Could not detect anomalies, Please try again",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
@@ -392,7 +402,8 @@ function updateThumbnail(dropZoneElement, file) {
       }
       var jsonResponse = Http.response;
       console.log(jsonResponse);
-      globalAnomaliesJsonObject = JSON.parse(Http.responseText); 
+      globalAnomaliesJsonObject = JSON.parse(Http.responseText);
+      createTable(globalData, globalAnomaliesJsonObject)
   }
   };
 
@@ -405,7 +416,7 @@ function getCells(data, type) {
     return data.map(row => `<tr>${getCells(row, 'td')}</tr>`).join('');
   }
   
-  function createTable(data) {
+  function createTable(data, anomalyData) {
     const [headings, ...rows] = data;
     return `
       <table>
@@ -417,7 +428,7 @@ function getCells(data, type) {
   
   //document.body.insertAdjacentHTML('afterbegin', createTable(data));
 
-  function createTable(data) {
+  function createTable(data, anomalyData) {
     var myTableDiv = document.getElementById("myDynamicTable");
     myTableDiv.innerHTML="";
   
@@ -452,6 +463,32 @@ function getCells(data, type) {
         var td = document.createElement('TD');
         td.width = '200';
         td.appendChild(document.createTextNode(data[i][j]));
+        
+        let nameCol = String(data[0][j]);
+        xAnomaliesArr = [];
+        
+        if(anomalyData) {
+          Object.keys(anomalyData).forEach(function(key) {
+            //console.log("key:" + key + "value:" + anomalyData[key])
+            if(String(key).localeCompare(nameCol)) {
+              xAnomaliesArr = anomalyData[key];
+            }
+          });
+          //check if in this specif row(i) was anomaly
+          for(var k = 0 ; k < xAnomaliesArr.length ; k++) {
+            if(i == xAnomaliesArr[k]) {
+              td.style.color='#FF0000';
+            }
+          }
+        }
+      
+        /****/
+        // if(i == 4) {
+        //   let nameCol = String(data[0][j]);
+        //   if(nameCol.localeCompare("lala") == 0) {
+        //     td.style.color='#FF0000';
+        //   }
+        // }
         tr.appendChild(td);
       }
     }
