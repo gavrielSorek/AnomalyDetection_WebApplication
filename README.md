@@ -39,4 +39,14 @@ node.js can be download from [here](https://nodejs.org/en/)
 
 __Installation Instructions:__
 
+1) download the files from the git.
+2) open terminal/cmd and and enter to the controller directory from terminal/cmd (the working directory shuld be controller folder).
+3) write in terminal/cmd __node controller.js__ and press enter.
+4) now the server is up.
+
+__run the client__
+1) if you want to run the client from the same computer as the server, open the browser and enter the uml: __127.0.0.1:9876__
+
 __UML and Restful Api pattern:__
+
+[![umlNew.png](https://i.postimg.cc/FHJJ3WXQ/umlNew.png)](https://postimg.cc/w1gvdkBW)
