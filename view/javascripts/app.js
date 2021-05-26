@@ -668,7 +668,7 @@ function getModels () {
   Http.send();
   Http.onreadystatechange = (e) => {
       var jsonResponse = JSON.parse(Http.responseText);
-      console.log("jsonResponse:" + jsonResponse)
+    //  console.log("jsonResponse:" + jsonResponse)
       //update the models list
       updateModelsList(jsonResponse);
       //setModels(jsonResponse);
