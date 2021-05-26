@@ -318,7 +318,9 @@ function updateThumbnail(dropZoneElement, file) {
       var arrayVal = [];
       var key = lines[0][i];
       for(var j = 1 ;j < numOfRows; j++){
+        if(lines[j][i] != "") {
           arrayVal.push(parseFloat(lines[j][i]));
+        }
       }
       js[lines[0][i]] = arrayVal;
   }
