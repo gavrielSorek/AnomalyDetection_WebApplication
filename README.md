@@ -45,12 +45,18 @@ __Installation Instructions:__
 4) now the server is up.
 
 __run the client instruction:__
-if(you want to run the client from the same computer as the server) 
+
+__if(you want to run the client from the same computer as the server)__ 
+
  {
+ 
  open the browser and enter the uml: __127.0.0.1:9876__ 
+ 
  }
- else {
+ __else__ {
+ 
   open the browser and enter the uml: __SERVER_IP:9876__ , while the __SERVER_IP__ is the ip of the server.
+  
  }
 
 __UML and Restful Api pattern:__
