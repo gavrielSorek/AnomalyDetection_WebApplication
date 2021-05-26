@@ -2,12 +2,11 @@ id = 1;
 var express = require('express');
 
 var app = express();
-app.use(express.json({limit: '100mb'}));
+app.use(express.json({limit: '500mb'}));
 var fs = require("fs");
 const model = require('../model/model')
 let cors = require('cors')
 app.use(cors())
-const MaxModels = 20
 
 //var detector = new detectorsFile.SimpleAnomalyDetectorJS("132");
 
@@ -17,15 +16,8 @@ const { Server } = require('http');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 
-
+//post model
 app.post('/api/model', function (req, res, next) { //next requrie (the function will not stop the program)
-   // check if we have already 20 models
-   if (model.getModels().size >= MaxModels) {
-      res.status(405);
-      res.end();
-      next();
-      return;
-   }
    const type = req.query.model_type; //type = hybrid/regression
    //  console.log("the type is :" + type);
    const data = req.body; //data is the object that the json body contain
@@ -51,7 +43,7 @@ app.post('/api/model', function (req, res, next) { //next requrie (the function 
    }
    next();
 })
-
+//get model status
 app.get('/api/model', function (req, res, next) {
    const id = req.query.model_id;
    var m = model.isMoudoleExsist(id);
@@ -88,7 +80,7 @@ app.delete('/api/model', function (req, res, next) {
       res.end();
    } else {
       console.log("item not found, error 400");
-      res.status(200);
+      res.status(400);
       res.end();
    }
    next();
@@ -132,6 +124,10 @@ app.post('/api/anomaly', async (req, res, next) => {
             res.json(model.extractAnomalies(detector.DetectAnomalies(modelItem.annomalyFile)));
             res.status(200);
             res.end();
+         } else { //if model item not found
+            res.status(420);
+            console.log("model does not exsist");
+            res.end();
          }
    }
    next();
@@ -140,5 +136,6 @@ app.post('/api/anomaly', async (req, res, next) => {
 var server = app.listen(9876, function () {
    var host = server.address().address
    var port = server.address().port
+   server.maxConnections = 20;
    console.log("Example app listening at http://%s:%s", host, port)
 })

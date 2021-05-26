@@ -90,10 +90,6 @@ function writeTrain(req, res, data, writeCsvFinished) {
   });
   modelMap.set(modelItem.id, modelItem);
   return modelItem;
-  //let modelItem = new moddelItem(currentId, req.query.model_type, new Date(), "ready", path);
-  //modelMap.set(modelItem.id, modelItem);
-  // let moddelItem = new moddelItem();
-  //return modelItem;
 }
 
 async function createAnnomalyFile(itemID, data) {
@@ -163,7 +159,7 @@ function learnModel(item) {
 function learnFinished(err, result) {
   if (err) {
     //need to add logic
-    console.log("err:" + err);
+    console.log("error to learn model" + err);
   } else {
     var model = modelMap.get(parseInt(result));
     if (model) {
