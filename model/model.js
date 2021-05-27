@@ -225,7 +225,6 @@ function getAnomaliesFromString(anomaliesStr,modelItem) {
     }
     //console.log(anomaliesObj);
     jsonItem['anomalies'] = anomaliesObj;
-
     jsonItem["reason"] = correlativeFeatures;
     console.log(jsonItem)
     return jsonItem;
