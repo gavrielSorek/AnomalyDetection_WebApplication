@@ -203,8 +203,7 @@ function getAnomaliesFromString(anomaliesStr,modelItem) {
   for (let i = 0; i < modelItem.modelFeatues.length; i++) {
     anomaliesObj[modelItem.modelFeatues[i].id] = [];
   }
-
-  if (anomalies) { //if there are anomalies
+//if there are anomalies
     anomalies = anomalies.split('^');
     for (let i = 0; i < anomalies.length; i++) {
       let line = anomalies[i].split(',')[1];
@@ -222,11 +221,10 @@ function getAnomaliesFromString(anomaliesStr,modelItem) {
     }
     //console.log(anomaliesObj);
     jsonItem['anomalies'] = anomaliesObj;
-    jsonItem["reason"] = "Any";
+    jsonItem["reason"] = {"reason:" : "any"};
   //  jsonItem['reason'] = 'ccc';
+  console.log(jsonItem)
     return jsonItem;
-  }
-return {};
 }
 //return the id from anomaly string
 function getIdFromAnomalies(anomalies) {
