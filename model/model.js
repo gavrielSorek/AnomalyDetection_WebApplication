@@ -228,7 +228,7 @@ function getAnomaliesFromString(anomaliesStr,modelItem) {
   }
   jsonItem['anomalies'] = anomaliesObj;
   jsonItem["reason"] = correlativeFeatures;
-  console.log(jsonItem)
+  //console.log(jsonItem)
   return jsonItem;
 }
 //return the id from anomaly string
@@ -238,14 +238,17 @@ function getIdFromAnomalies(anomalies) {
 }
 
 async function isDataContainsFeaturs(features,dataToCheck){
+
   let dataToCheckFeaures = [];
 
   for (const property in dataToCheck) {
     dataToCheckFeaures.push({ id: property, title: property });
   }
+ 
   for (let i = 0; i < features.length; i++) {
     let isValid=false;
-    for (let j = 0; j < dataToCheckFeaures.length; j++) {
+    let j = 0
+    for (j = 0; j < dataToCheckFeaures.length; j++) {
       if(features[i].id==dataToCheckFeaures[j].id){
           isValid=true;
       }

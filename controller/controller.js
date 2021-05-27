@@ -130,8 +130,12 @@ app.post('/api/anomaly', async (req, res, next) => {
       console.log("model does not exsist");
       res.end();
       next();
+      return;
    }
    let modelItem = model.getModels().get(parseInt(id));
+   // console.log(modelItem.modelFeatues);
+   // console.log("_________________________________")
+   // console.log(data_to_detect);
    if(await model.isDataContainsFeaturs(modelItem.modelFeatues,data_to_detect)==false){
       res.status(430);
       console.log("annomaly file does not contains all fetures!");
