@@ -88,7 +88,6 @@ app.delete('/api/model', function (req, res, next) {
    if (m) {
       model.deleteModel(id)
      
-      // res.header("No-Access-Control-Allow-Origin", "*");
       res.header("Access-Control-Allow-Origin", "*");
       res.status(200);
       console.log("item deleted sucssfully");
@@ -135,11 +134,17 @@ app.post('/api/anomaly', async (req, res, next) => {
       await model.createAnnomalyFile(id, data_to_detect);
       let modelItem = model.getModels().get(parseInt(id));
          if (modelItem) {
+            if(modelItem.status !== "ready") { //still pending
+               console.log("model still pending");
+               res.status(401);
+               res.end();
+            } else { //if model is ready
             let detector = modelItem.anomalyDetector;
             res.json(model.extractAnomalies(detector.DetectAnomalies(modelItem.annomalyFile)));
             res.status(200);
             res.end();
-         } else if (modelItem == null) {
+            }
+         } else if (modelItem == null) { //double columns
             res.status(495);
             res.end();
          }
