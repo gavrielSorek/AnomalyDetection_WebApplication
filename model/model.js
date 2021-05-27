@@ -224,7 +224,7 @@ function getAnomaliesFromString(anomaliesStr,modelItem) {
     jsonItem['anomalies'] = anomaliesObj;
     jsonItem["reason"] = {"reason:" : "Any"};
   //  jsonItem['reason'] = 'ccc';
-  console.log(jsonItem)
+ // console.log(jsonItem)
 
   return jsonItem;
 
