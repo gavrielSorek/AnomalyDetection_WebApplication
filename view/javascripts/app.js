@@ -500,20 +500,11 @@ function getCells(data, type) {
             }
           }
         }
-      
-        /****/
-        // if(i == 4) {
-        //   let nameCol = String(data[0][j]);
-        //   if(nameCol.localeCompare("lala") == 0) {
-        //     td.style.color='#FF0000';
-        //   }
-        // }
         tr.appendChild(td);
       }
     }
     myTableDiv.appendChild(table);
   }
-
 
   function getColumn() {
     var columnNumber;
@@ -531,14 +522,29 @@ function getCells(data, type) {
     });
 }
 
+function getColumnByName(colName) {
+  var columnNumber;
+  var colNames = globalData[0];
+  var currentColName = colName;
+  for(var i = 0 ; i < colNames.length ; i++) {
+    var result = currentColName.localeCompare(colNames[i]);
+    if(result == 0) {
+      columnNumber = i;
+      break;
+    }
+  }
+  return globalData.map(function(row) {
+      return row[columnNumber];
+  });
+}
+
 
 function updateGraph() {
   var col = getColumn();
   if(!globalAnomaliesJsonObject) {
-    createNewGraph(col, null);
+    createNewGraph(col, null, null);
   } else {
-    createNewGraph(col, globalAnomaliesJsonObject["anomalies"]);
-    //createNewGraph(col, globalAnomaliesJsonObject["anomalies"],globalAnomaliesJsonObject["reason"]);
+    createNewGraph(col, globalAnomaliesJsonObject["anomalies"],globalAnomaliesJsonObject["reason"]);
   }
 }
 
@@ -560,10 +566,31 @@ function createSelectList(items) {
 
 
 //create graph from array
-function createNewGraph(colData, anomalyData) {
+function createNewGraph(colData, anomalyData, reason) {
 	var xArr = [];
   var yArr = [];
   var colName = colData[0];
+  console.log("reason:" + reason)
+  var yCorArr = [];
+
+  var anomalyCorFlag = 0;
+  // var colCorName = reason[colName];
+  // let colCorData = getColumnByName(colCorName);
+  var strReason = JSON.stringify(reason);
+  var colCorName = ""
+  let colCorData = "{}";
+  if(strReason.localeCompare("{}") == 0) {
+    colCorName = ""
+    colCorData = "{}";
+  } else {
+    if(reason.hasOwnProperty(colName)) {
+      anomalyCorFlag = 1;
+      colCorName = reason[colName];
+      console.log("$$$$$$$$colCorName:" + colCorName)
+      colCorData = getColumnByName(colCorName);
+    }
+  }
+
 
   var anomaliesBubbleData = [];
   var xAnomaliesArr = [];
@@ -603,30 +630,72 @@ function createNewGraph(colData, anomalyData) {
 		yArr.push(colData[i]);
 	}
 
-  myData = {
-    labels: xArr,
-    datasets: [{
-      type: 'bubble',
-      label: 'Anomalies',
-      data: anomaliesBubbleData,
-      backgroundColor: 'rgb(255, 99, 71, 1)',
-      borderColor: 'rgb(255, 99, 71)',
-      fill: true,
-      cubicInterpolationMode: 'monotone',
-      tension: 0.4
-    },
-    {
-        label: colData[0],
-        data: yArr,
-        backgroundColor: 'RGBA(0,2,90,0.25)',
-        borderColor: 'RGBA(0,2,90,1)',
+  if(strReason.localeCompare("{}") != 0) {
+    for(var i = 1; i < colCorData.length; i++) {
+      yCorArr.push(colCorData[i]);
+  }
+  }
+  
+  if(anomalyCorFlag) {
+    myData = {
+      labels: xArr,
+      datasets: [{
+        type: 'bubble',
+        label: 'Anomalies',
+        data: anomaliesBubbleData,
+        backgroundColor: 'rgb(255, 99, 71, 1)',
+        borderColor: 'rgb(255, 99, 71)',
         fill: true,
         cubicInterpolationMode: 'monotone',
         tension: 0.4
-      }
-    ]
-};
+      },
+      {
+          label: colData[0],
+          data: yArr,
+          backgroundColor: 'RGBA(0,2,90,0.25)',
+          borderColor: 'RGBA(0,2,90,1)',
+          fill: true,
+          cubicInterpolationMode: 'monotone',
+          tension: 0.4
+        }, 
+        {
+          label: colCorName,
+          data: yCorArr,
+          backgroundColor: 'RGBA(175, 238, 238, 0.25)',
+          borderColor: 'RGB(175, 238, 238)',
+          fill: true,
+          cubicInterpolationMode: 'monotone',
+          tension: 0.4
+        }
+      ]
+  };
+  } else { 
+    myData = {
+      labels: xArr,
+      datasets: [{
+        type: 'bubble',
+        label: 'Anomalies',
+        data: anomaliesBubbleData,
+        backgroundColor: 'rgb(255, 99, 71, 1)',
+        borderColor: 'rgb(255, 99, 71)',
+        fill: true,
+        cubicInterpolationMode: 'monotone',
+        tension: 0.4
+      },
+      {
+          label: colData[0],
+          data: yArr,
+          backgroundColor: 'RGBA(0,2,90,0.25)',
+          borderColor: 'RGBA(0,2,90,1)',
+          fill: true,
+          cubicInterpolationMode: 'monotone',
+          tension: 0.4
+        }
+      ]
+  };
+  }
 
+  
 var options = {
   responsive: true,
   maintainAspectRatio: false,
