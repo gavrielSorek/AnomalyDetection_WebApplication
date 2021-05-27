@@ -8,7 +8,7 @@ This project is a Web applictaion which represents a web anomaly detector. With 
 You can find [here!](http://google.com) the video of the project which demonstrates the features of the application.
 
 _Application open screen:_
-[![anomaly-Detector-Web.png](https://i.postimg.cc/7LhcP4wP/anomaly-Detector-Web.png)](https://postimg.cc/2qpTTP1g)
+[![new-Web-Photo.png](https://i.postimg.cc/TPNwsn6c/new-Web-Photo.png)](https://postimg.cc/f3XDttk3)
 •	learn – upload normal file to designed box, the server will learn from this file.
 
 •	detect – upload file which the client want to investigate to designed box, the server will detect anomalies and return it back to client.
@@ -39,4 +39,26 @@ node.js can be download from [here](https://nodejs.org/en/)
 
 __Installation Instructions:__
 
+1) download the files from the git.
+2) open terminal/cmd and and enter to the controller directory from terminal/cmd (the working directory shuld be controller folder).
+3) write in terminal/cmd __node controller.js__ and press enter.
+4) now the server is up.
+
+__run the client instruction:__
+
+__if (you want to run the client from the same computer as the server)__ 
+
+ {
+ 
+ open the browser and enter the uml: __127.0.0.1:9876__ 
+ 
+ }
+ __else__ {
+ 
+  open the browser and enter the uml: __SERVER_IP:9876__ , while the __SERVER_IP__ is the ip of the server.
+  
+ }
+
 __UML and Restful Api pattern:__
+
+[![umlNew.png](https://i.postimg.cc/FHJJ3WXQ/umlNew.png)](https://postimg.cc/w1gvdkBW)
