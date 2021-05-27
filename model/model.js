@@ -196,8 +196,9 @@ function extractAnomalies(anomaliesStr,modelItem) {
   return getAnomaliesFromString(anomaliesStr,modelItem);
 }
 function getAnomaliesFromString(anomaliesStr,modelItem) {
-  let jsonItem ={}
+  let jsonItem ={};
   let anomaliesObj = {};
+  let correlativeFeatures = {};
   let anomalies = anomaliesStr.split('\\')[0];
   // create empty arrays for each fetaure
   for (let i = 0; i < modelItem.modelFeatues.length; i++) {
@@ -218,12 +219,14 @@ function getAnomaliesFromString(anomaliesStr,modelItem) {
       // }
       anomaliesObj[feature1].push(line);
       anomaliesObj[feature2].push(line);
+      correlativeFeatures[feature1] = feature2;
+      correlativeFeatures[feature2] = feature1;
     }
     //console.log(anomaliesObj);
     jsonItem['anomalies'] = anomaliesObj;
-    jsonItem["reason"] = {"reason:" : "any"};
+    jsonItem["reason"] = correlativeFeatures;
   //  jsonItem['reason'] = 'ccc';
-  console.log(jsonItem)
+    console.log(jsonItem)
     return jsonItem;
 }
 //return the id from anomaly string

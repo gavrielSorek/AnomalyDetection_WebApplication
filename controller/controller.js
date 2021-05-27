@@ -129,6 +129,7 @@ app.post('/api/anomaly', async (req, res, next) => {
       res.status(420);
       console.log("model does not exsist");
       res.end();
+      next();
    }
    let modelItem = model.getModels().get(parseInt(id));
    if(await model.isDataContainsFeaturs(modelItem.modelFeatues,data_to_detect)==false){
@@ -155,9 +156,6 @@ app.post('/api/anomaly', async (req, res, next) => {
             res.status(200);
             res.end();
             }
-         } else if (modelItem == null) { //double columns
-            res.status(495);
-            res.end();
          }
          else { //if model item not found
             res.status(420);
