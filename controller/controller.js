@@ -130,9 +130,14 @@ app.post('/api/anomaly', async (req, res, next) => {
       console.log("model does not exsist");
       res.end();
    }
+   let modelItem = model.getModels().get(parseInt(id));
+   if(await model.isDataContainsFeaturs(modelItem.modelFeatues,data_to_detect)==false){
+      res.status(430);
+      console.log("annomaly file does not contains all fetures!");
+      res.end();
+   }
    else {
       await model.createAnnomalyFile(id, data_to_detect);
-      let modelItem = model.getModels().get(parseInt(id));
          if (modelItem) {
             if(modelItem.status !== "ready") { //still pending
                var json_res = {
@@ -146,7 +151,7 @@ app.post('/api/anomaly', async (req, res, next) => {
                res.end();
             } else { //if model is ready
             let detector = modelItem.anomalyDetector;
-            res.json(model.extractAnomalies(detector.DetectAnomalies(modelItem.annomalyFile)));
+            res.json(await model.extractAnomalies(detector.DetectAnomalies(modelItem.annomalyFile),modelItem));
             res.status(200);
             res.end();
             }

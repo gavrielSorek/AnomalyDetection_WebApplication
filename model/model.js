@@ -37,7 +37,7 @@ function getOS() {
   return opsys;
 }
 
-function moddelItem(id, type, datetime, status, fileName) {
+function moddelItem(id, type, datetime, status, fileName,modelFeatues) {
   this.id = id;
   this.type = type;
   this.datetime = datetime;
@@ -45,6 +45,7 @@ function moddelItem(id, type, datetime, status, fileName) {
   this.fileName = fileName;
   this.annomalyFile = null;
   this.anomalyDetector = null;
+  this.modelFeatues =modelFeatues;
 }
 
 
@@ -91,7 +92,8 @@ function writeTrain(req, res, data, writeCsvFinished) {
     req.query.model_type,
     now,
     "pendding",
-    path
+    path,
+    csvHeader
   );
   csvWriter.writeRecords(attrObjArry).then(() => {
     writeCsvFinished(modelItem);
@@ -190,28 +192,31 @@ function learnFinished(err, result) {
   }
 }
 //the function update the anomalies when detection finishe.
-function extractAnomalies(anomaliesStr) {
-  return getAnomaliesFromString(anomaliesStr);
+function extractAnomalies(anomaliesStr,modelItem) {
+  return getAnomaliesFromString(anomaliesStr,modelItem);
 }
-function getAnomaliesFromString(anomaliesStr) {
-  //console.log(anomaliesStr);
+function getAnomaliesFromString(anomaliesStr,modelItem) {
   let jsonItem ={}
+  let anomaliesObj = {};
   let anomalies = anomaliesStr.split('\\')[0];
+  // create empty arrays for each fetaure
+  for (let i = 0; i < modelItem.modelFeatues.length; i++) {
+    anomaliesObj[modelItem.modelFeatues[i].id] = [];
+  }
 
   if (anomalies) { //if there are anomalies
     anomalies = anomalies.split('^');
-    let anomaliesObj = {};
     for (let i = 0; i < anomalies.length; i++) {
       let line = anomalies[i].split(',')[1];
       let features = anomalies[i].split(',')[0].split('~');
       let feature1 = features[0];
       let feature2 = features[1];
-      if (!anomaliesObj[feature1]) { //if this feature doesnt exist yet
-        anomaliesObj[feature1] = [];
-      }
-      if (!anomaliesObj[feature2]) { //if this feature doesnt exist yet
-        anomaliesObj[feature2] = [];
-      }
+      // if (!anomaliesObj[feature1]) { //if this feature doesnt exist yet
+      //   anomaliesObj[feature1] = [];
+      // }
+      // if (!anomaliesObj[feature2]) { //if this feature doesnt exist yet
+      //   anomaliesObj[feature2] = [];
+      // }
       anomaliesObj[feature1].push(line);
       anomaliesObj[feature2].push(line);
     }
@@ -228,6 +233,26 @@ function getIdFromAnomalies(anomalies) {
   const anomalyAndId = anomalies.split('\\');
   return anomalyAndId[1];
 }
+
+async function isDataContainsFeaturs(features,dataToCheck){
+  let dataToCheckFeaures = [];
+
+  for (const property in dataToCheck) {
+    dataToCheckFeaures.push({ id: property, title: property });
+  }
+  for (let i = 0; i < features.length; i++) {
+    let isValid=false;
+    for (let j = 0; j < dataToCheckFeaures.length; j++) {
+      if(features[i].id==dataToCheckFeaures[j].id){
+          isValid=true;
+      }
+    }
+    if(!isValid){
+      return false;
+    }
+  }
+   return true;       
+}
 module.exports = {
   writeTrain,
   isMoudoleExsist,
@@ -236,4 +261,5 @@ module.exports = {
   createAnnomalyFile,
   learnModel,
   extractAnomalies,
+  isDataContainsFeaturs
 };
