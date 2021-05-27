@@ -195,6 +195,7 @@ function extractAnomalies(anomaliesStr) {
 }
 function getAnomaliesFromString(anomaliesStr) {
   //console.log(anomaliesStr);
+  let jsonItem ={}
   let anomalies = anomaliesStr.split('\\')[0];
 
   if (anomalies) { //if there are anomalies
@@ -215,7 +216,10 @@ function getAnomaliesFromString(anomaliesStr) {
       anomaliesObj[feature2].push(line);
     }
     //console.log(anomaliesObj);
-    return anomaliesObj;
+    jsonItem['anomalies'] = anomaliesObj;
+    jsonItem["reason"] = "Any";
+  //  jsonItem['reason'] = 'ccc';
+    return jsonItem;
   }
 return {};
 }

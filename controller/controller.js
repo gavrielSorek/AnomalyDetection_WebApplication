@@ -135,6 +135,12 @@ app.post('/api/anomaly', async (req, res, next) => {
       let modelItem = model.getModels().get(parseInt(id));
          if (modelItem) {
             if(modelItem.status !== "ready") { //still pending
+               var json_res = {
+                  model_id: modelItem.id,
+                  upload_time: modelItem.datetime,
+                  status: modelItem.status
+               }    
+            res.json(json_res);
                console.log("model still pending");
                res.status(401);
                res.end();
