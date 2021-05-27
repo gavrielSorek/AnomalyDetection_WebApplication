@@ -228,7 +228,7 @@ function getAnomaliesFromString(anomaliesStr,modelItem) {
     jsonItem["reason"] = correlativeFeatures;
     console.log(jsonItem)
     return jsonItem;
-
+  }
 }
 //return the id from anomaly string
 function getIdFromAnomalies(anomalies) {
