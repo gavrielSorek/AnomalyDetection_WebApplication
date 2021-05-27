@@ -115,7 +115,6 @@ document.querySelectorAll(".drop-zone__input-learn").forEach((inputElement) => {
   });
 
   dropZoneElement.addEventListener("drop", (e) => {
-      console.log("loploploplop");
     e.preventDefault();
 
     if (e.dataTransfer.files.length) {
@@ -300,11 +299,6 @@ function updateThumbnail(dropZoneElement, file) {
   }
 }
 
-
-
-
-
-
   //convert csv file content to JSON object
   function CSVToJSON(lines) {
     var numOfCol = lines[0].length;
@@ -398,7 +392,27 @@ function updateThumbnail(dropZoneElement, file) {
         console.log("error 420")
         Swal.fire({
           title: "Error",
-          text: "Could not detect anomalies, Please try again",
+          text: "Model not found, Please try again",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+      });
+      } else if(Http.status == 430) {
+        console.log("error 430")
+        Swal.fire({
+          title: "Error",
+          text: "Anomaly file does not contain all features, Please try again",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+      });
+      } else if(Http.status == 401) {
+        console.log("error 401")
+        Swal.fire({
+          title: "Error",
+          text: "Model's status is pending, Please wait",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
@@ -408,7 +422,7 @@ function updateThumbnail(dropZoneElement, file) {
       var jsonResponse = Http.response;
       console.log(jsonResponse);
       globalAnomaliesJsonObject = JSON.parse(Http.responseText);
-      createTable(globalData, globalAnomaliesJsonObject)
+      createTable(globalData, globalAnomaliesJsonObject["anomalies"])
   }
   };
 
@@ -523,7 +537,8 @@ function updateGraph() {
   if(!globalAnomaliesJsonObject) {
     createNewGraph(col, null);
   } else {
-    createNewGraph(col, globalAnomaliesJsonObject);
+    createNewGraph(col, globalAnomaliesJsonObject["anomalies"]);
+    //createNewGraph(col, globalAnomaliesJsonObject["anomalies"],globalAnomaliesJsonObject["reason"]);
   }
 }
 
@@ -556,7 +571,6 @@ function createNewGraph(colData, anomalyData) {
 
   console.log("anomalyData:")
   console.log(anomalyData)
-
   
   if(anomalyData) {
     Object.keys(anomalyData).forEach(function(key) {
@@ -588,8 +602,6 @@ function createNewGraph(colData, anomalyData) {
   for(var i = 1; i < colData.length; i++) {
 		yArr.push(colData[i]);
 	}
-
-  
 
   myData = {
     labels: xArr,
@@ -667,11 +679,8 @@ function getModels () {
   Http.setRequestHeader("Content-Type", "application/json");
   Http.send();
   Http.onreadystatechange = (e) => {
-      var jsonResponse = JSON.parse(Http.responseText);
-    //  console.log("jsonResponse:" + jsonResponse)
-      //update the models list
-      updateModelsList(jsonResponse);
-      //setModels(jsonResponse);
+    var jsonResponse = JSON.parse(Http.responseText);
+    updateModelsList(jsonResponse);
   }
 }
 
@@ -723,7 +732,7 @@ function deleteModel(){
     } else if(Http.status == 400) {
       Swal.fire({
         title: "Error",
-        text: "Could not delete model " + id+", Please try again",
+        text: "Could not delete model " + id +", Please try again",
         icon: "error",
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
