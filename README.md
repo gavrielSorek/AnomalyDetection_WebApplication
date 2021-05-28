@@ -33,6 +33,16 @@ Contains the logic parts of the application such as detect anomalies by Contact 
 4)	view – 
 This folder contains the view logic.
 
+__Server documantation:__
+
+[![server.png](https://i.postimg.cc/nVmxQhPV/server.png)](https://postimg.cc/c6d2p0WP)
+
+
+__Client documantation:__
+
+[![client.png](https://i.postimg.cc/50FhvspK/client.png)](https://postimg.cc/bDpVfH71)
+
+
 __Installation requirements:__
 
 node.js can be download from [here](https://nodejs.org/en/)
