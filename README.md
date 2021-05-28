@@ -36,6 +36,7 @@ This folder contains the view logic.
 __Installation requirements:__
 
 node.js can be download from [here](https://nodejs.org/en/)
+windows/linux/mac operation system
 
 __Installation Instructions:__
 
