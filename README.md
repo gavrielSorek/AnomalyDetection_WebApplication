@@ -39,7 +39,7 @@ node.js can be download from [here](https://nodejs.org/en/)
 
 __Installation Instructions:__
 
-1) download the files from the git.
+1) download the files from git.
 2) open terminal/cmd and and enter to the controller directory from terminal/cmd (the working directory shuld be controller folder).
 3) write in terminal/cmd __node controller.js__ and press enter.
 4) now the server is up.
