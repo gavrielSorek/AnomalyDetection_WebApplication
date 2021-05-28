@@ -5,7 +5,7 @@ This project is a Web applictaion which represents a web anomaly detector. With 
 
 **Video demonstration:**
 
-You can find [here!](http://google.com) the video of the project which demonstrates the features of the application.
+You can find [here!](https://www.youtube.com/watch?v=3vlI5JXWyHg) the video of the project which demonstrates the features of the application.
 
 _Application open screen:_
 [![new-Web-Photo.png](https://i.postimg.cc/TPNwsn6c/new-Web-Photo.png)](https://postimg.cc/f3XDttk3)
@@ -59,6 +59,6 @@ __if (you want to run the client from the same computer as the server)__
   
  }
 
-__UML and Restful Api pattern:__
+__UML:__
 
 [![umlNew.png](https://i.postimg.cc/FHJJ3WXQ/umlNew.png)](https://postimg.cc/w1gvdkBW)
