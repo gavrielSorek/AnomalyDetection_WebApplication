@@ -2,6 +2,7 @@
 **Introduction:**
 
 This project is a Web applictaion which represents a web anomaly detector.
+
 With this application we can detect anomalies of flight by using a web anomaly detector.
 
 **Video demonstration:**
