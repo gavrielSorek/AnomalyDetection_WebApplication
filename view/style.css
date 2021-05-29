@@ -56,7 +56,6 @@ body {
   margin: auto;
   font-size: 5rem;
   text-shadow: 0 0 20% white;
-  text-decoration: underline;
   font-family: "Raleway", sans-serif;
   margin-bottom: 0.5em;
   background-color: rgba(190, 190, 190, 0.3);
@@ -72,7 +71,6 @@ body {
   margin: auto;
   font-size: 4rem;
   text-shadow: 0 0 20% white;
-  text-decoration: underline;
   font-family: "Raleway", sans-serif;
   margin-bottom: 0.5em;
   background-color: rgba(190, 190, 190, 0.3);
@@ -88,7 +86,6 @@ body {
   margin: auto;
   font-size: 4rem;
   text-shadow: 0 0 20% white;
-  text-decoration: underline;
   font-family: "Raleway", sans-serif;
   margin-bottom: 5%;
   background-color: rgba(190, 190, 190, 0.3);
@@ -688,7 +685,8 @@ transform: rotateX(180deg);
   border: none;
   border-radius: 100px;
   outline: none;
-  margin-left: 25%;
+  margin-left: 20%;
+  font-size: 100%;
 }
 #modelsList {
   grid-area: c;
@@ -744,4 +742,15 @@ transform: rotateX(180deg);
 
 #scroll {
   text-align: center;
+}
+
+#detectModelId {
+  width: 100%;
+  padding: 10px 35px 10px 15px;
+  border: none;
+  border-radius: 100px;
+  outline: none;
+  margin-right: 5%;
+  margin-left: 20%;
+  font-size: 100%;
 }

@@ -1,14 +1,15 @@
 const results = [];
 var globalLearnjsonObject = null;
 var globalDetectjsonObject = null;
-var globalAnomaliesJsonObject = null;
+var globalAnomaliesJsonObject = {};
 var globalData = null;
+
+var globalTest = "test"
 
 console.log("the application up")
 
 //call function every 5 sec
 var intervalId = window.setInterval(function(){
-  //console.log("passed 5 seconds")
   getModels();
 }, 5000);
 
@@ -24,10 +25,8 @@ document.getElementById('modelsSelectList').addEventListener('change', function(
   modelIDtoDelete.value= this.value;
 });
 
-
 function addNewModel() {
     modelType = checkClicked();
-    console.log(modelType);
     createNewModel(modelType, globalLearnjsonObject);
 }
 
@@ -95,8 +94,7 @@ document.querySelectorAll(".drop-zone__input-learn").forEach((inputElement) => {
 
         var jsonObject = CSVToJSON(lines);
         globalLearnjsonObject = jsonObject;
-        console.log(jsonObject);
-        
+        globalAnomaliesJsonObject = {};
     }
     reader.readAsText(inputElement.files[0]);
     document.getElementById("learnButton").removeAttribute('disabled');
@@ -135,8 +133,7 @@ document.querySelectorAll(".drop-zone__input-learn").forEach((inputElement) => {
 
         var jsonObject = CSVToJSON(lines);
         globalLearnjsonObject = jsonObject;
-        console.log(jsonObject);
-
+        globalAnomaliesJsonObject = {};
     }
     reader.readAsText(inputElement.files[0]);
     document.getElementById("learnButton").removeAttribute('disabled');
@@ -178,9 +175,7 @@ function updateThumbnail(dropZoneElement, file) {
   }
 }
 
-
  /*********************************************************/ 
-
 
 //detect drop off 
 document.querySelectorAll(".drop-zone__input-detect").forEach((inputElement) => {
@@ -235,7 +230,6 @@ document.querySelectorAll(".drop-zone__input-detect").forEach((inputElement) => 
   });
 
   dropZoneElement.addEventListener("drop", (e) => {
-      console.log("loploploplop");
     e.preventDefault();
 
     if (e.dataTransfer.files.length) {
@@ -304,9 +298,6 @@ function updateThumbnail(dropZoneElement, file) {
     var numOfCol = lines[0].length;
     var numOfRows = lines.length;
 
-    console.log("the num row:", numOfRows);
-    console.log("the num col:", numOfCol);
-
     var js={};
     for(var i = 0 ; i < numOfCol ; i++){
       var arrayVal = [];
@@ -335,8 +326,6 @@ function updateThumbnail(dropZoneElement, file) {
   }
 
   const createNewModel = (type, jsonData) => {
-    console.log("jsonData:");
-    console.log(jsonData);
     const Http = new XMLHttpRequest();
     const url='http://localhost:9876/api/model?model_type='+type;
     Http.open("POST", url);
@@ -364,9 +353,6 @@ function updateThumbnail(dropZoneElement, file) {
           cancelButtonColor: "#d33",
       });
       }
-      var jsonResponse = Http.response;
-      console.log(jsonResponse);
-      globalAnomaliesJsonObject = JSON.parse(Http.responseText); 
   }
   };
 
@@ -420,32 +406,10 @@ function updateThumbnail(dropZoneElement, file) {
       });
       }
       var jsonResponse = Http.response;
-      console.log(jsonResponse);
       globalAnomaliesJsonObject = JSON.parse(Http.responseText);
       createTable(globalData, globalAnomaliesJsonObject["anomalies"])
   }
   };
-
-//functions for create a table
-function getCells(data, type) {
-    return data.map(cell => `<${type}>${cell}</${type}>`).join('');
-  }
-  
-  function createBody(data) {
-    return data.map(row => `<tr>${getCells(row, 'td')}</tr>`).join('');
-  }
-  
-  function createTable(data, anomalyData) {
-    const [headings, ...rows] = data;
-    return `
-      <table>
-        <thead>${getCells(headings, 'th')}</thead>
-        <tbody>${createBody(rows)}</tbody>
-      </table>
-    `;
-  }
-  
-  //document.body.insertAdjacentHTML('afterbegin', createTable(data));
 
   function createTable(data, anomalyData) {
     var myTableDiv = document.getElementById("myDynamicTable");
@@ -485,14 +449,9 @@ function getCells(data, type) {
         
         let nameCol = String(data[0][j]);
         xAnomaliesArr = [];
-        
-        if(anomalyData) {
-          Object.keys(anomalyData).forEach(function(key) {
-            //console.log("key:" + key + "value:" + anomalyData[key])
-            if(String(key).localeCompare(nameCol)) {
-              xAnomaliesArr = anomalyData[key];
-            }
-          });
+
+      if(anomalyData) {
+          xAnomaliesArr = anomalyData[nameCol];
           //check if in this specif row(i) was anomaly
           for(var k = 0 ; k < xAnomaliesArr.length ; k++) {
             if(i == xAnomaliesArr[k]) {
@@ -500,20 +459,12 @@ function getCells(data, type) {
             }
           }
         }
-      
-        /****/
-        // if(i == 4) {
-        //   let nameCol = String(data[0][j]);
-        //   if(nameCol.localeCompare("lala") == 0) {
-        //     td.style.color='#FF0000';
-        //   }
-        // }
+
         tr.appendChild(td);
       }
     }
     myTableDiv.appendChild(table);
   }
-
 
   function getColumn() {
     var columnNumber;
@@ -531,14 +482,29 @@ function getCells(data, type) {
     });
 }
 
+function getColumnByName(colName) {
+  var columnNumber;
+  var colNames = globalData[0];
+  var currentColName = colName;
+  for(var i = 0 ; i < colNames.length ; i++) {
+    var result = currentColName.localeCompare(colNames[i]);
+    if(result == 0) {
+      columnNumber = i;
+      break;
+    }
+  }
+  return globalData.map(function(row) {
+      return row[columnNumber];
+  });
+}
 
 function updateGraph() {
   var col = getColumn();
-  if(!globalAnomaliesJsonObject) {
-    createNewGraph(col, null);
+  var strGlobalAnomaliesJsonObject = JSON.stringify(globalAnomaliesJsonObject);
+  if(strGlobalAnomaliesJsonObject.localeCompare("{}") == 0) {
+    createNewGraph(col, null, {});
   } else {
-    createNewGraph(col, globalAnomaliesJsonObject["anomalies"]);
-    //createNewGraph(col, globalAnomaliesJsonObject["anomalies"],globalAnomaliesJsonObject["reason"]);
+    createNewGraph(col, globalAnomaliesJsonObject["anomalies"],globalAnomaliesJsonObject["reason"]);
   }
 }
 
@@ -558,23 +524,35 @@ function createSelectList(items) {
   }
 }
 
-
 //create graph from array
-function createNewGraph(colData, anomalyData) {
-	var xArr = [];
+function createNewGraph(colData, anomalyData, reason) {
+  var xArr = [];
   var yArr = [];
   var colName = colData[0];
+  var yCorArr = [];
+
+  var anomalyCorFlag = 0;
+  var strReason = JSON.stringify(reason);
+  var colCorName = ""
+  let colCorData = "{}";
+  if(strReason.localeCompare("{}") == 0) {
+    colCorName = ""
+    colCorData = "{}";
+  } else {
+    if(reason.hasOwnProperty(colName)) {
+      anomalyCorFlag = 1;
+      colCorName = reason[colName];
+      colCorData = getColumnByName(colCorName);
+    }
+  }
 
   var anomaliesBubbleData = [];
   var xAnomaliesArr = [];
   var yAnomaliesArr = [];
 
-  console.log("anomalyData:")
-  console.log(anomalyData)
-  
+
   if(anomalyData) {
     Object.keys(anomalyData).forEach(function(key) {
-      //console.log("key:" + key + "value:" + anomalyData[key])
       if(key == colName) {
         xAnomaliesArr = anomalyData[key];
       }
@@ -590,43 +568,83 @@ function createNewGraph(colData, anomalyData) {
         r: 5
       };
       anomaliesBubbleData.push(jsonItemTst);
-      console.log("anomaliesBubbleData:" + anomaliesBubbleData)
     }
   }
-  console.log("anomaliesBubbleData:" + anomaliesBubbleData)
 
   for (let i = 0; i < colData.length; i++) {
     xArr.push(i.toString());
   }
   
   for(var i = 1; i < colData.length; i++) {
-		yArr.push(colData[i]);
-	}
+    yArr.push(colData[i]);
+  }
 
-  myData = {
-    labels: xArr,
-    datasets: [{
-      type: 'bubble',
-      label: 'Anomalies',
-      data: anomaliesBubbleData,
-      backgroundColor: 'rgb(255, 99, 71, 1)',
-      borderColor: 'rgb(255, 99, 71)',
-      fill: true,
-      cubicInterpolationMode: 'monotone',
-      tension: 0.4
-    },
-    {
-        label: colData[0],
-        data: yArr,
-        backgroundColor: 'RGBA(0,2,90,0.25)',
-        borderColor: 'RGBA(0,2,90,1)',
+  if(strReason.localeCompare("{}") != 0) {
+    for(var i = 1; i < colCorData.length; i++) {
+      yCorArr.push(colCorData[i]);
+  }
+  }
+  
+  if(anomalyCorFlag) {
+    myData = {
+      labels: xArr,
+      datasets: [{
+        type: 'bubble',
+        label: 'Anomalies',
+        data: anomaliesBubbleData,
+        backgroundColor: 'rgb(255, 99, 71, 1)',
+        borderColor: 'rgb(255, 99, 71)',
         fill: true,
         cubicInterpolationMode: 'monotone',
         tension: 0.4
-      }
-    ]
-};
+      },
+      {
+          label: colData[0],
+          data: yArr,
+          backgroundColor: 'RGBA(0,2,90,0.25)',
+          borderColor: 'RGBA(0,2,90,1)',
+          fill: true,
+          cubicInterpolationMode: 'monotone',
+          tension: 0.4
+        }, 
+        {
+          label: colCorName,
+          data: yCorArr,
+          backgroundColor: 'RGBA(175, 238, 238, 0.25)',
+          borderColor: 'RGB(175, 238, 238)',
+          fill: true,
+          cubicInterpolationMode: 'monotone',
+          tension: 0.4
+        }
+      ]
+  };
+  } else { 
+    myData = {
+      labels: xArr,
+      datasets: [{
+        type: 'bubble',
+        label: 'Anomalies',
+        data: anomaliesBubbleData,
+        backgroundColor: 'rgb(255, 99, 71, 1)',
+        borderColor: 'rgb(255, 99, 71)',
+        fill: true,
+        cubicInterpolationMode: 'monotone',
+        tension: 0.4
+      },
+      {
+          label: colData[0],
+          data: yArr,
+          backgroundColor: 'RGBA(0,2,90,0.25)',
+          borderColor: 'RGBA(0,2,90,1)',
+          fill: true,
+          cubicInterpolationMode: 'monotone',
+          tension: 0.4
+        }
+      ]
+  };
+  }
 
+  
 var options = {
   responsive: true,
   maintainAspectRatio: false,
@@ -658,7 +676,6 @@ var options = {
 
 };
 
-
 // Default chart defined with type: 'line'
 Chart.defaults.global.defaultFontFamily = "monospace";
 var ctx = document.getElementById('myChart').getContext('2d');
@@ -670,7 +687,6 @@ options: options
 
 }
 
-
 function getModels () {
   const Http = new XMLHttpRequest();
   const url='http://localhost:9876/api/models';
@@ -679,8 +695,13 @@ function getModels () {
   Http.setRequestHeader("Content-Type", "application/json");
   Http.send();
   Http.onreadystatechange = (e) => {
-    var jsonResponse = JSON.parse(Http.responseText);
-    updateModelsList(jsonResponse);
+    // var jsonResponse = JSON.parse(Http.responseText);
+    // updateModelsList(jsonResponse);
+    var response = Http.responseText;
+    if(response.length > 0) {
+      var jsonResponse = JSON.parse(Http.responseText);
+      updateModelsList(jsonResponse);
+    }
   }
 }
 
@@ -707,7 +728,6 @@ function updateModelsList(modelsData) {
       modelsSelectList.value=id;
   }
 }
-
 
 function deleteModel(){
   let id = modelIDtoDelete.value;
@@ -742,7 +762,7 @@ function deleteModel(){
 }
 
 
+  
+  
+  
 
-  
-  
-  
