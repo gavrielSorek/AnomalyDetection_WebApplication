@@ -68,4 +68,4 @@ __UML:__
 [![umlNew.png](https://i.postimg.cc/FHJJ3WXQ/umlNew.png)](https://postimg.cc/w1gvdkBW)
 
 
-Furthermore, you can find [here](https://github.com/sapirdavid/MileStone1_DesktopApp/blob/master/MileStone1/Documentation/Flight%20Simulator%20-%20Documentation%20.pdf) more information regarding the project and it's files.
+Furthermore, you can find [here](https://github.com/gavrielSorek/advenceProgrammingMilestone2/tree/main/documentation) more information regarding the project and it's files.
