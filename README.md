@@ -1,7 +1,8 @@
 # MileStone2 Web Application:
 **Introduction:**
 
-This project is a Web applictaion which represents a web anomaly detector. With this application we can detect anomalies of flight by using a web anomaly detector.
+This project is a Web applictaion which represents a web anomaly detector.
+With this application we can detect anomalies of flight by using a web anomaly detector.
 
 **Video demonstration:**
 
@@ -9,29 +10,29 @@ You can find [here!](https://www.youtube.com/watch?v=3vlI5JXWyHg) the video of t
 
 _Application open screen:_
 [![new-Web-Photo.png](https://i.postimg.cc/TPNwsn6c/new-Web-Photo.png)](https://postimg.cc/f3XDttk3)
-•	learn – upload normal file to designed box, the server will learn from this file.
+•	learn – upload normal file to designated box, the server will learn from this file.
 
-•	detect – upload file which the client want to investigate to designed box, the server will detect anomalies and return it back to client.
+•	detect – upload file which the client want to investigate to designated box, the server will detect anomalies and return it back to client.
 
 •	Graphs – after uploading the anomaly file, by looking the the graphs we can see the data of our anomalies file represent by graph, and the anomalies wich marked with red dots.
 We can select any feature from the feature list.
 
-•	Table – after uploading the anomaly file, by looking the the table we can see the data of our anomalies file.
+•	Table – after uploading the anomaly file, by looking at the table we can see the data of our anomalies file.
 
 __Project Structure:__
 
 [![project-Structure.png](https://i.postimg.cc/sxZXWbz5/project-Structure.png)](https://postimg.cc/JHMMV6Gh)
 
 1)	AnomalyDetectorByOs –
-contain native code of anomaly detector for windows ,linux and mac.
+contains native code of anomaly detector for windows ,linux and mac.
 2)	controller – 
 responsible of the server logic (server response logic).
 This folder contains the server code. 
 3)	Model –
-the main and only model of the project, implements the ( ) design pattern and its responsible of the business logic of the project.
+the main and only model of the project, implements the ( ) design pattern and it's responsible of the business logic of the project.
 Contains the logic parts of the application such as detect anomalies by Contact the anomaly detector, parse the result from the anomaly detector and so on.
 4)	view – 
-This folder contains the view logic.
+This folder contains the view logic and it's implementation.
 
 __Installation requirements:__
 
