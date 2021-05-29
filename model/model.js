@@ -210,7 +210,7 @@ function getAnomaliesFromString(anomaliesStr,modelItem) {
     if(anomalies){
     anomalies = anomalies.split('^');
     for (let i = 0; i < anomalies.length; i++) {
-      let line = anomalies[i].split(',')[1];
+      let line = parseInt(anomalies[i].split(',')[1]);
       let features = anomalies[i].split(',')[0].split('~');
       let feature1 = features[0];
       let feature2 = features[1];
@@ -228,7 +228,7 @@ function getAnomaliesFromString(anomaliesStr,modelItem) {
     //console.log(anomaliesObj);
 
   }
-  jsonItem['anomalies'] = anomaliesObj;
+  jsonItem['anomalies'] = convertToSpan(anomaliesObj);
   jsonItem["reason"] = correlativeFeatures;
   //console.log(jsonItem)
   return jsonItem;
@@ -261,6 +261,44 @@ async function isDataContainsFeaturs(features,dataToCheck){
   }
    return true;       
 }
+//convert anomalies line to spans
+function convertToSpan(anomaliesObj) {
+  let anomaliesWithSpan = {};
+  for (const column in anomaliesObj) {  //add empty arrays to the new obj
+    anomaliesWithSpan[column] = [];
+  }
+  for (const column in anomaliesObj) {
+    anomaliesObj[column].sort(function(a, b) {
+      return a - b;
+    });
+    let start = -2, end = -2;
+    for (let i = 0; i < anomaliesObj[column].length; i ++) {
+      if(anomaliesObj[column][i] > end + 1) { //Exceeds span , create new span
+        if(end >=0) { //if valid end
+          anomaliesWithSpan[column].push([start, end + 1]);
+          start = anomaliesObj[column][i];
+          end = start;
+          if(i == anomaliesObj[column].length - 1) { //if its last element
+           anomaliesWithSpan[column].push([start, end + 1]);
+          }
+        }  else { //if its the first element
+          //console.log("first is:", anomaliesObj[column][i]);
+          start = anomaliesObj[column][i];
+          end = anomaliesObj[column][i];
+          if(i == anomaliesObj[column].length - 1) { //if its last element (only one element in array)
+           anomaliesWithSpan[column].push([start, end + 1]);
+          }
+        }
+      } else if(i == anomaliesObj[column].length - 1) { //if its the last element (its cant be the first)
+           end = anomaliesObj[column][i];
+           anomaliesWithSpan[column].push([start, end + 1]);
+     }else {//if the next in the span
+        end = anomaliesObj[column][i];
+      }
+    }
+  }
+  return anomaliesWithSpan;
+}
 module.exports = {
   writeTrain,
   isMoudoleExsist,
@@ -269,5 +307,6 @@ module.exports = {
   createAnnomalyFile,
   learnModel,
   extractAnomalies,
-  isDataContainsFeaturs
+  isDataContainsFeaturs,
+  convertToSpan
 };

@@ -168,6 +168,10 @@ app.post('/api/anomaly', async (req, res, next) => {
    next();
 })
 
+//let anomaliesObj = {"a":[1,2,3,4], "b": [8], "c":[9,10,12,13,14], "d":[80,90,91,98], "k":[], "h":[]};
+//let b = convertToSpan(anomaliesObj)
+//console.log(b)
+//console.log(model.convertToSpan(anomaliesObj));
 var server = app.listen(9876, function () {
    var host = server.address().address
    var port = server.address().port
