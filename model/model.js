@@ -101,7 +101,7 @@ function writeTrain(req, res, data, writeCsvFinished) {
   modelMap.set(modelItem.id, modelItem);
   return modelItem;
 }
-
+//create annomaly csv accordingly to data.
 async function createAnnomalyFile(itemID, data) {
   let csvHeader = [];
   for (const property in data) {
@@ -136,7 +136,7 @@ async function createAnnomalyFile(itemID, data) {
   modelItem.annomalyFile = path;
   return await csvWriter.writeRecords(attrObjArry)
 }
-
+//return true if model exist in the map
 function isMoudoleExsist(itemID) {
   if (modelMap.has(parseInt(itemID))) {
     return modelMap.get(parseInt(itemID));
@@ -162,6 +162,7 @@ function deleteModel(itemID) {
 function getModels() {
   return modelMap;
 }
+//learn normal model
 function learnModel(item) {
   if (item.type === "regression") {
     let simpleDetector = new detectorsFile.SimpleAnomalyDetectorJS(item.id.toString());
@@ -177,17 +178,18 @@ function learnModel(item) {
     return 400;
   }
 }
+//this function is execute when learnNormal finished
 function learnFinished(err, result) {
   if (err) {
-    //need to add logic
-    console.log("error to learn model" + err);
+    //do nothing
+    //console.log("error to learn model" + err);
   } else {
     var model = modelMap.get(parseInt(result));
     if (model) {
       model.status = "ready";
-      console.log("item " + result + " is ready , new state" + model.status);
-    } else {
-      console.log("Item with id" + result + "not found");
+      //console.log("item " + result + " is ready , new state" + model.status);
+    } else { //do nothing
+      //console.log("Item with id" + result + "not found");
     }
   }
 }
@@ -236,7 +238,7 @@ function getIdFromAnomalies(anomalies) {
   const anomalyAndId = anomalies.split('\\');
   return anomalyAndId[1];
 }
-
+//return true if data contain the features that found in learn file.
 async function isDataContainsFeaturs(features,dataToCheck){
 
   let dataToCheckFeaures = [];
