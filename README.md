@@ -10,9 +10,9 @@ You can find [here!](https://www.youtube.com/watch?v=3vlI5JXWyHg) the video of t
 
 _Application open screen:_
 [![new-Web-Photo.png](https://i.postimg.cc/TPNwsn6c/new-Web-Photo.png)](https://postimg.cc/f3XDttk3)
-•	learn – upload normal file to designated box, the server will learn from this file.
+•	Learn – upload normal file to designated box, the server will learn from this file.
 
-•	detect – upload file which the client want to investigate to designated box, the server will detect anomalies and return it back to client.
+•	Detect – upload file which the client want to investigate to designated box, the server will detect anomalies and return it back to client.
 
 •	Graphs – after uploading the anomaly file, by looking the the graphs we can see the data of our anomalies file represent by graph, and the anomalies wich marked with red dots.
 We can select any feature from the feature list.
