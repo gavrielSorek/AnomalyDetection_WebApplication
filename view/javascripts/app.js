@@ -2,6 +2,8 @@ const results = [];
 var globalLearnjsonObject = null;
 var globalDetectjsonObject = null;
 var globalAnomaliesJsonObject = {};
+var globalAnomaliesJsonLIST = {};
+
 var globalData = null;
 
 var globalTest = "test"
@@ -405,11 +407,48 @@ function updateThumbnail(dropZoneElement, file) {
           cancelButtonColor: "#d33",
       });
       }
-      var jsonResponse = Http.response;
+     // var jsonResponse = Http.response;
       globalAnomaliesJsonObject = JSON.parse(Http.responseText);
-      createTable(globalData, globalAnomaliesJsonObject["anomalies"])
+      fromGlobalAnomaliesToListAnomalies();
+      //change!
+     // console.log("original date is:" + JSON.stringify(globalAnomaliesJsonObject["anomalies"]));
+
+     window.setInterval(function(){
+      createTable(globalData, globalAnomaliesJsonLIST)
+    }, 5000);
   }
   };
+
+ async function fromGlobalAnomaliesToListAnomalies(){
+    let finalList={};
+  //  console.log("input:" +JSON.parse(globalAnomaliesJsonObject["anomalies"]));
+    //foreachFetuare\
+    var input = globalAnomaliesJsonObject["anomalies"];
+    Object.keys(input).forEach((k, v) => {
+   //   console.log("value:" + input[k] + "\n key:" + k);
+      //create empty list for each objet
+      finalList[k]=[];
+    //build the new list
+  //  console.log("size is:"+ input[k].length);
+    
+    for(var j = 0 ; j <input[k].length ; j++){
+   //   console.log(j+"is:"+ input[k][j]);
+      let sItem = input[k][j];
+    //  var SplitString = sItem.split(",");
+      finalList[k].push(sItem[0]);
+      var loopInt =sItem[0];
+      //push from start to end-1;
+      while(loopInt+1 < sItem[1]){
+        finalList[k].push(++loopInt);
+       }
+      }
+    })
+//    globalAnomaliesJsonLIST = JSON.stringify(finalList);
+globalAnomaliesJsonLIST = finalList;
+
+  //  console.log("res is " +JSON.stringify(globalAnomaliesJsonLIST));
+    return finalList;
+    }
 
   function createTable(data, anomalyData) {
     var myTableDiv = document.getElementById("myDynamicTable");
@@ -449,8 +488,9 @@ function updateThumbnail(dropZoneElement, file) {
         
         let nameCol = String(data[0][j]);
         xAnomaliesArr = [];
-
+      
       if(anomalyData) {
+    //    console.log("table is:" + JSON.stringify(anomalyData)) + "namecol is "+ nameCol; 
           xAnomaliesArr = anomalyData[nameCol];
           //check if in this specif row(i) was anomaly
           for(var k = 0 ; k < xAnomaliesArr.length ; k++) {
@@ -500,11 +540,11 @@ function getColumnByName(colName) {
 
 function updateGraph() {
   var col = getColumn();
-  var strGlobalAnomaliesJsonObject = JSON.stringify(globalAnomaliesJsonObject);
+  var strGlobalAnomaliesJsonObject = JSON.stringify(globalAnomaliesJsonLIST);
   if(strGlobalAnomaliesJsonObject.localeCompare("{}") == 0) {
     createNewGraph(col, null, {});
   } else {
-    createNewGraph(col, globalAnomaliesJsonObject["anomalies"],globalAnomaliesJsonObject["reason"]);
+    createNewGraph(col, globalAnomaliesJsonLIST,globalAnomaliesJsonObject["reason"]);
   }
 }
 
@@ -563,10 +603,11 @@ function createNewGraph(colData, anomalyData, reason) {
     for(var i = 0; i < xAnomaliesArr.length; i++) {
       // var anomalyItem = {};
       jsonItemTst = {
-        x: xAnomaliesArr[i],
+        x: xAnomaliesArr[i].toString(),
         y: colData[xAnomaliesArr[i]],
         r: 5
       };
+    //  console.log(jsonItemTst)
       anomaliesBubbleData.push(jsonItemTst);
     }
   }
