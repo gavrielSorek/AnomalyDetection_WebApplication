@@ -207,8 +207,21 @@ function getAnomaliesFromString(anomaliesStr,modelItem) {
     anomaliesObj[modelItem.modelFeatues[i].id] = [];
   }
 //if there are anomalies
+
+
     if(anomalies){
-    anomalies = anomalies.split('^');
+      anomalies = anomalies.split('^');
+      for (let i = 0; i < anomalies.length; i++) { //enter all corrlated features
+        let features = anomalies[i].split(',')[0].split('~');
+        let feature1 = features[0];
+        let feature2 = features[1];
+        correlativeFeatures[feature1] = feature2;
+        if(!correlativeFeatures[feature2]) { //if no corrlation with feature 2 yet
+          correlativeFeatures[feature2] = feature1;
+        }
+      }
+      //console.log(correlativeFeatures);
+
     for (let i = 0; i < anomalies.length; i++) {
       let line = parseInt(anomalies[i].split(',')[1]);
       let features = anomalies[i].split(',')[0].split('~');
@@ -221,9 +234,9 @@ function getAnomaliesFromString(anomaliesStr,modelItem) {
       //   anomaliesObj[feature2] = [];
       // }
       anomaliesObj[feature1].push(line);
-      anomaliesObj[feature2].push(line);
-      correlativeFeatures[feature1] = feature2;
-      correlativeFeatures[feature2] = feature1;
+      if (correlativeFeatures[feature2] === feature1) {
+        anomaliesObj[feature2].push(line);
+      }
     }
     //console.log(anomaliesObj);
 

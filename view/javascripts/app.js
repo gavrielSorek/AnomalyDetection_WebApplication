@@ -612,7 +612,7 @@ function createNewGraph(colData, anomalyData, reason) {
     }
   }
 
-  for (let i = 0; i < colData.length; i++) {
+  for (let i = 1; i < colData.length; i++) {
     xArr.push(i.toString());
   }
   
