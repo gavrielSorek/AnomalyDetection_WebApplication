@@ -307,6 +307,5 @@ module.exports = {
   createAnnomalyFile,
   learnModel,
   extractAnomalies,
-  isDataContainsFeaturs,
-  convertToSpan
+  isDataContainsFeaturs
 };
