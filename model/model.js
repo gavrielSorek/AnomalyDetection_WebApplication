@@ -85,7 +85,7 @@ function writeTrain(req, res, data, writeCsvFinished) {
 
   }
   let date = new Date();
-  var now = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + "T" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + date.getTimezoneOffset();
+  var now = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + "T" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + timeConvert(date.getTimezoneOffset());
 
   let modelItem = new moddelItem(
     currentId,
@@ -101,6 +101,24 @@ function writeTrain(req, res, data, writeCsvFinished) {
   modelMap.set(modelItem.id, modelItem);
   return modelItem;
 }
+
+function timeConvert(n) {
+  var plusminus = "+";
+  if(0>n)
+    plusminus="-";
+ // var num = n;
+  var hours = (n / 60);
+  var rhours = Math.floor(hours);
+  var minutes = (hours - rhours) * 60;
+  var rminutes = Math.round(minutes);
+  if(10<rminutes && 10<rhours)
+    return plusminus +Math.abs(rhours) + "." + rminutes;
+  if(10<rminutes && 10>rhours)
+    return plusminus+"0"+Math.abs(rhours) + "." + rminutes;
+  if(10>rminutes && 10>rhours)
+    return plusminus+"0"+Math.abs(rhours) + ".0" + rminutes;
+  return plusminus+ Math.abs(rhours) + "." + rminutes;
+  }
 //create annomaly csv accordingly to data.
 async function createAnnomalyFile(itemID, data) {
   let csvHeader = [];
