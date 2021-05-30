@@ -7,10 +7,10 @@ With this application we can detect anomalies of flight by using a web anomaly d
 
 **Video demonstration:**
 
-You can find [here!](https://www.youtube.com/watch?v=3vlI5JXWyHg) the video of the project which demonstrates the features of the application.
+You can find [here!](https://www.youtube.com/watch?v=VPJ-5CoDj1M) the video of the project which demonstrates the features of the application.
 
 _Application open screen:_
-[![webApp.png](https://i.postimg.cc/pLCwKYcQ/webApp.png)](https://postimg.cc/87FXSWSs)
+[![open-Screen.jpg](https://i.postimg.cc/ZKkwX0Dy/open-Screen.jpg)](https://postimg.cc/K4N7McbZ)
 •	Learn – upload normal file to designated box, the server will learn from this file.
 
 •	Detect – upload file which the client want to investigate to designated box, the server will detect anomalies and return it back to client.
@@ -22,7 +22,7 @@ We can select any feature from the feature list.
 
 __Project Structure:__
 
-[![project-Structure.png](https://i.postimg.cc/sxZXWbz5/project-Structure.png)](https://postimg.cc/JHMMV6Gh)
+[![folders.png](https://i.postimg.cc/sD0tB3nj/folders.png)](https://postimg.cc/KRB9whSw)
 
 1)	AnomalyDetectorByOs –
 contains native code of anomaly detector for windows ,linux and mac.
