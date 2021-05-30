@@ -407,7 +407,6 @@ function updateThumbnail(dropZoneElement, file) {
           cancelButtonColor: "#d33",
       });
       }
-     // var jsonResponse = Http.response;
      
      var response = Http.responseText;
      if(response.length > 0) {
@@ -416,9 +415,6 @@ function updateThumbnail(dropZoneElement, file) {
        globalAnomaliesJsonObject = {"anomalies":{}, "reason":{}}
      }
       fromGlobalAnomaliesToListAnomalies();
-      //change!
-     // console.log("original date is:" + JSON.stringify(globalAnomaliesJsonObject["anomalies"]));
-
      window.setInterval(function(){
       createTable(globalData, globalAnomaliesJsonLIST)
     }, 5000);
@@ -427,20 +423,17 @@ function updateThumbnail(dropZoneElement, file) {
 
  async function fromGlobalAnomaliesToListAnomalies(){
     let finalList={};
-  //  console.log("input:" +JSON.parse(globalAnomaliesJsonObject["anomalies"]));
-    //foreachFetuare\
+  
     var input = globalAnomaliesJsonObject["anomalies"];
     Object.keys(input).forEach((k, v) => {
-   //   console.log("value:" + input[k] + "\n key:" + k);
-      //create empty list for each objet
+   
       finalList[k]=[];
-    //build the new list
-  //  console.log("size is:"+ input[k].length);
+    
     
     for(var j = 0 ; j <input[k].length ; j++){
-   //   console.log(j+"is:"+ input[k][j]);
+   
       let sItem = input[k][j];
-    //  var SplitString = sItem.split(",");
+    
       finalList[k].push(sItem[0]);
       var loopInt =sItem[0];
       //push from start to end-1;
@@ -449,11 +442,9 @@ function updateThumbnail(dropZoneElement, file) {
        }
       }
     })
-//    globalAnomaliesJsonLIST = JSON.stringify(finalList);
 globalAnomaliesJsonLIST = finalList;
 
-  //  console.log("res is " +JSON.stringify(globalAnomaliesJsonLIST));
-    return finalList;
+      return finalList;
     }
 
   function createTable(data, anomalyData) {
@@ -496,7 +487,7 @@ globalAnomaliesJsonLIST = finalList;
         xAnomaliesArr = [];
       
       if(anomalyData) {
-    //    console.log("table is:" + JSON.stringify(anomalyData)) + "namecol is "+ nameCol; 
+    
           xAnomaliesArr = anomalyData[nameCol];
           //check if in this specif row(i) was anomaly
           for(var k = 0 ; k < xAnomaliesArr.length ; k++) {
@@ -607,13 +598,13 @@ function createNewGraph(colData, anomalyData, reason) {
 
   if(xAnomaliesArr) {
     for(var i = 0; i < xAnomaliesArr.length; i++) {
-      // var anomalyItem = {};
+      
       jsonItemTst = {
         x: xAnomaliesArr[i].toString(),
         y: colData[xAnomaliesArr[i]],
         r: 5
       };
-    //  console.log(jsonItemTst)
+    
       anomaliesBubbleData.push(jsonItemTst);
     }
   }
@@ -711,9 +702,7 @@ var options = {
         ticks: {
            fontColor: 'RGBA(0,2,90,1)',
            beginAtZero: true,
-           //maxTicksLimit: 5,
-           //stepSize: Math.ceil(250 / 5),
-           //max: 250
+           
         },
         gridLines: {
           zeroLineColor: 'RGBA(0,2,90,1)'
@@ -742,8 +731,7 @@ function getModels () {
   Http.setRequestHeader("Content-Type", "application/json");
   Http.send();
   Http.onreadystatechange = (e) => {
-    // var jsonResponse = JSON.parse(Http.responseText);
-    // updateModelsList(jsonResponse);
+    
     var response = Http.responseText;
     if(response.length > 0) {
       var jsonResponse = JSON.parse(Http.responseText);
