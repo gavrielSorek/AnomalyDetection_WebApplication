@@ -11,6 +11,9 @@ You can find [here!](https://www.youtube.com/watch?v=VPJ-5CoDj1M) the video of t
 
 _Application open screen:_
 [![open-Screen.jpg](https://i.postimg.cc/ZKkwX0Dy/open-Screen.jpg)](https://postimg.cc/K4N7McbZ)
+
+__Application features:__
+
 •	Learn – upload normal file to designated box, the server will learn from this file.
 
 •	Detect – upload file which the client want to investigate to designated box, the server will detect anomalies and return it back to client.
@@ -19,6 +22,18 @@ _Application open screen:_
 We can select any feature from the feature list.
 
 •	Table – after uploading the anomaly file, by looking at the table we can see the data of our anomalies file.
+
+__The API__
+
+The server will listen to incoming HTTP requests in port 9876.
+
+The process of working with the API begins with uploading information for learning or training according to specific algorithm.
+
+After uploading the information, the ID of the trained model is returned. This model is maintained until the user delete it.
+
+At a later stage, the user will send the information he wants to find out if there have been any anomalies according to the model previously trained.
+
+Any user can view all the models trained by the server on list.
 
 __Project Structure:__
 
