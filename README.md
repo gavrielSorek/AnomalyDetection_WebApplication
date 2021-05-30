@@ -10,7 +10,7 @@ With this application we can detect anomalies of flight by using a web anomaly d
 You can find [here!](https://www.youtube.com/watch?v=3vlI5JXWyHg) the video of the project which demonstrates the features of the application.
 
 _Application open screen:_
-[![new-Web-Photo.png](https://i.postimg.cc/TPNwsn6c/new-Web-Photo.png)](https://postimg.cc/f3XDttk3)
+[![webApp.png](https://i.postimg.cc/pLCwKYcQ/webApp.png)](https://postimg.cc/87FXSWSs)
 •	Learn – upload normal file to designated box, the server will learn from this file.
 
 •	Detect – upload file which the client want to investigate to designated box, the server will detect anomalies and return it back to client.
