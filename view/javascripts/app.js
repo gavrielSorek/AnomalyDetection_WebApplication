@@ -411,13 +411,12 @@ function updateThumbnail(dropZoneElement, file) {
      var response = Http.responseText;
      if(response.length > 0) {
       globalAnomaliesJsonObject = JSON.parse(Http.responseText);
+      fromGlobalAnomaliesToListAnomalies();
+      createTable(globalData, globalAnomaliesJsonLIST);
      } else {
        globalAnomaliesJsonObject = {"anomalies":{}, "reason":{}}
+       fromGlobalAnomaliesToListAnomalies();
      }
-      fromGlobalAnomaliesToListAnomalies();
-     window.setInterval(function(){
-      createTable(globalData, globalAnomaliesJsonLIST)
-    }, 5000);
   }
   };
 
