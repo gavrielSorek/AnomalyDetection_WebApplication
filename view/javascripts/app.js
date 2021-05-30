@@ -420,6 +420,7 @@ function updateThumbnail(dropZoneElement, file) {
      } else {
        globalAnomaliesJsonObject = {"anomalies":{}, "reason":{}}
        fromGlobalAnomaliesToListAnomalies();
+       createTable(globalData, globalAnomaliesJsonLIST);
      }
   }
   };
@@ -490,8 +491,8 @@ globalAnomaliesJsonLIST = finalList;
         xAnomaliesArr = [];
       
       if(anomalyData) {
-    
-          xAnomaliesArr = anomalyData[nameCol];
+          if(anomalyData[nameCol]) {
+            xAnomaliesArr = anomalyData[nameCol];
           //check if in this specif row(i) was anomaly
           for(var k = 0 ; k < xAnomaliesArr.length ; k++) {
             if(i == xAnomaliesArr[k]) {
@@ -499,6 +500,7 @@ globalAnomaliesJsonLIST = finalList;
             }
           }
         }
+      }
 
         tr.appendChild(td);
       }
