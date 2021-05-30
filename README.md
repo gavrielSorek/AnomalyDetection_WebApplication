@@ -10,7 +10,7 @@ With this application we can detect anomalies of flight by using a web anomaly d
 You can find [here!](https://www.youtube.com/watch?v=3vlI5JXWyHg) the video of the project which demonstrates the features of the application.
 
 _Application open screen:_
-[![new-Web-Photo.png](https://i.postimg.cc/TPNwsn6c/new-Web-Photo.png)](https://postimg.cc/f3XDttk3)
+[![webApp.png](https://i.postimg.cc/pLCwKYcQ/webApp.png)](https://postimg.cc/87FXSWSs)
 •	Learn – upload normal file to designated box, the server will learn from this file.
 
 •	Detect – upload file which the client want to investigate to designated box, the server will detect anomalies and return it back to client.
@@ -44,7 +44,7 @@ windows/linux/mac operation system
 __Installation Instructions:__
 
 1) download the files from git.
-2) open terminal/cmd and and enter to the controller directory from terminal/cmd (the working directory shuld be controller folder).
+2) open terminal/cmd and enter to the controller directory (the working directory shuld be controller folder).
 3) write in terminal/cmd __node controller.js__ and press enter.
 4) now the server is up.
 
@@ -65,7 +65,6 @@ __if (you want to run the client from the same computer as the server)__
 
 __UML:__
 
-[![umlNew.png](https://i.postimg.cc/FHJJ3WXQ/umlNew.png)](https://postimg.cc/w1gvdkBW)
-
+[![umlNew.png](https://i.postimg.cc/XvnfF9Bb/umlNew.png)](https://postimg.cc/k2hRP6y1)
 
 Furthermore, you can find [here](https://github.com/gavrielSorek/advenceProgrammingMilestone2/tree/main/documentation) more information regarding the project and it's files.
