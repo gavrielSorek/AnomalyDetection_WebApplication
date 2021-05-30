@@ -74,6 +74,8 @@ document.querySelectorAll(".drop-zone__input-learn").forEach((inputElement) => {
   //for the case of click to upload file
   inputElement.addEventListener("change", (e) => {
     const reader = new FileReader();
+    if(inputElement.files[0] ==null)
+    return;
     if(!inputElement.files[0].name.toLowerCase().endsWith(".csv")) {
       Swal.fire({
         title: "Error",
@@ -191,6 +193,8 @@ document.querySelectorAll(".drop-zone__input-detect").forEach((inputElement) => 
   inputElement.addEventListener("change", (e) => {
     
     const reader = new FileReader();
+    if(inputElement.files[0] ==null)
+      return;
     if(!inputElement.files[0].name.toLowerCase().endsWith(".csv")) {
       Swal.fire({
         title: "Error",
