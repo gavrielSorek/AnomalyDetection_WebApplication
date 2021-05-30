@@ -23,7 +23,7 @@ var modelIDtoDelete = document.getElementById("deleteModelId")
 const title = document.getElementById("title");
 
 document.getElementById('modelsSelectList').addEventListener('change', function() {
-  console.log('You selected:', this.value);
+  //console.log('You selected:', this.value);
   modelIDtoDelete.value= this.value;
 });
 
@@ -408,7 +408,13 @@ function updateThumbnail(dropZoneElement, file) {
       });
       }
      // var jsonResponse = Http.response;
+     
+     var response = Http.responseText;
+     if(response.length > 0) {
       globalAnomaliesJsonObject = JSON.parse(Http.responseText);
+     } else {
+       globalAnomaliesJsonObject = {"anomalies":{}, "reason":{}}
+     }
       fromGlobalAnomaliesToListAnomalies();
       //change!
      // console.log("original date is:" + JSON.stringify(globalAnomaliesJsonObject["anomalies"]));
