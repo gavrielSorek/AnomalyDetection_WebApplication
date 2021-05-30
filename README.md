@@ -65,7 +65,6 @@ __if (you want to run the client from the same computer as the server)__
 
 __UML:__
 
-[![umlNew.png](https://i.postimg.cc/FHJJ3WXQ/umlNew.png)](https://postimg.cc/w1gvdkBW)
-
+[![umlNew.png](https://i.postimg.cc/XvnfF9Bb/umlNew.png)](https://postimg.cc/k2hRP6y1)
 
 Furthermore, you can find [here](https://github.com/gavrielSorek/advenceProgrammingMilestone2/tree/main/documentation) more information regarding the project and it's files.
