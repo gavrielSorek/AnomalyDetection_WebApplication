@@ -22,7 +22,7 @@ We can select any feature from the feature list.
 
 __Project Structure:__
 
-[![project-Structure.png](https://i.postimg.cc/sxZXWbz5/project-Structure.png)](https://postimg.cc/JHMMV6Gh)
+[![folders.png](https://i.postimg.cc/sD0tB3nj/folders.png)](https://postimg.cc/KRB9whSw)
 
 1)	AnomalyDetectorByOs –
 contains native code of anomaly detector for windows ,linux and mac.
