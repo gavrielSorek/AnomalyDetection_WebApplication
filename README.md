@@ -44,7 +44,7 @@ windows/linux/mac operation system
 __Installation Instructions:__
 
 1) download the files from git.
-2) open terminal/cmd and and enter to the controller directory from terminal/cmd (the working directory shuld be controller folder).
+2) open terminal/cmd and enter to the controller directory (the working directory shuld be controller folder).
 3) write in terminal/cmd __node controller.js__ and press enter.
 4) now the server is up.
 
